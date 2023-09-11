@@ -37,7 +37,7 @@ jobs:
         
 
       - name: install app dependencies and build it
-        env:   
+        # env:   
         run: pnpm i && pnpm build
 
 
