@@ -27,8 +27,8 @@
   $: totalWattage = 0
     // totalWattage = gear.items.length * gear.equipment.details.power.wattage
   $: totalCost = gear.items.length * gear.equipment.cost
-
-  $: gear.equipment.model, handleModelUpdate() 
+  $: updatingModel = gear.equipment.model;
+  $: updatingModel, handleModelUpdate() 
 
   function handleModelUpdate() {
     if (cloudSearch) {
