@@ -10,7 +10,7 @@ mod menus;
 fn main() {
     let ctx = tauri::generate_context!();
 
-    let menu = menus::bar::generate_menu_bar();
+    let menu = menus::bar::generate_menu_bar(&ctx.package_info().name);
 
     tauri::Builder::default()
         .setup(move |app| {
