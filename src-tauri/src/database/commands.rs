@@ -122,44 +122,52 @@ pub fn get_all_items(db: tauri::State<Database>) -> Vec<models::Item> {
     items
 }
 
-#[tokio::test]
-async fn inside() {
-    let mut db =
-        Database::open_file("/home/michaelaboah/.local/share/com.sonic-sync.dev/primary-polo.db")
-            .unwrap();
+#[cfg(test)]
+mod tests {
+    use crate::database::runtime::setup_indicies;
 
-    super::runtime::setup_indicies(&mut db);
+    use super::*;
 
-    let item = reqwest::get("http://localhost:8080/queries/find-model/QL5")
-        .await
-        .unwrap()
-        .json::<serde_json::Value>()
-        .await
+    #[tokio::test]
+    async fn inside() {
+        let mut db = Database::open_file(
+            "/home/michaelaboah/.local/share/com.sonic-sync.dev/primary-polo.db",
+        )
         .unwrap();
 
-    let item = serde_json::from_value::<models::Item>(item.get("data").unwrap().clone());
+        setup_indicies(&mut db);
 
-    let mut session = db.start_session().unwrap();
-    session.start_transaction(None).unwrap();
+        let item = reqwest::get("http://localhost:8080/queries/find-model/QL5")
+            .await
+            .unwrap()
+            .json::<serde_json::Value>()
+            .await
+            .unwrap();
 
-    let collection = db.collection::<models::Item>("items");
+        let item = serde_json::from_value::<models::Item>(item.get("data").unwrap().clone());
 
-    // Handle duplicate insertion
-    let f = collection
-        .insert_one_with_session(&item.unwrap(), &mut session)
-        .is_err_and(|e| matches!(e, Error::DuplicateKey(..)));
+        let mut session = db.start_session().unwrap();
+        session.start_transaction(None).unwrap();
 
-    if f {
+        let collection = db.collection::<models::Item>("items");
+
+        // Handle duplicate insertion
+        let f = collection
+            .insert_one_with_session(&item.unwrap(), &mut session)
+            .is_err_and(|e| matches!(e, Error::DuplicateKey(..)));
+
+        if f {
+            let cursor = collection.find(None).unwrap();
+
+            dbg!(cursor.count());
+
+            return;
+        }
+
+        session.commit_transaction().unwrap();
+
         let cursor = collection.find(None).unwrap();
 
         dbg!(cursor.count());
-
-        return;
     }
-
-    session.commit_transaction().unwrap();
-
-    let cursor = collection.find(None).unwrap();
-
-    dbg!(cursor.count());
 }
