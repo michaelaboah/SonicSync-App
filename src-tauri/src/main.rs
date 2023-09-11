@@ -14,11 +14,13 @@ fn main() {
 
     tauri::Builder::default()
         .setup(move |app| {
-            let app_data_dir = app.path_resolver().app_local_data_dir().expect(
+            let mut app_data_dir = app.path_resolver().app_local_data_dir().expect(
                 "A 'Local App Data Directory' was not found on your system. Cannot run program",
             );
 
-            let db = start_db(&app_data_dir);
+            println!("\n App data dir path: {:?}", &app_data_dir);
+
+            let db = start_db(&mut app_data_dir);
             app.manage(db);
             Ok(())
         })
