@@ -1,30 +1,29 @@
 use polodb_core::{bson::doc, Collection, Database};
 use std::{thread, time};
 
-const DATABASE_FILE_NAME: &'static str = "database/primary-polo.db";
+const DATABASE_FILE_NAME: &'static str = "primary-polo.db";
 
 /// Starts Database
 ///
 /// If db file doesn't exist in normal location, create one
 ///     else
 /// open database and return
-pub fn start_db(app_data_dir: &std::path::PathBuf) -> Database {
+pub fn start_db(app_data_dir: &mut std::path::PathBuf) -> Database {
     if !app_data_dir.is_dir() {
+        app_data_dir.push("database");
         // Tell the user that the resolved app directory isn't a directory
-        println!("Resolved App data directory isn't a directory. Aborting program in 60 seconds");
-        thread::sleep(time::Duration::from_secs(60));
-        panic!()
+        std::fs::create_dir_all(&app_data_dir).unwrap();
     }
 
-    let path = app_data_dir.join(DATABASE_FILE_NAME);
+    let db_path = app_data_dir.join(DATABASE_FILE_NAME);
 
-    dbg!("{:?}", path.as_os_str());
+    dbg!("{:?}", db_path.as_os_str());
 
-    if !path.exists() {
+    if !db_path.exists() {
         println!("Generated new database");
     }
 
-    let mut db = Database::open_file(path).unwrap();
+    let mut db = Database::open_file(db_path).unwrap();
     setup_indicies(&mut db);
 
     db
