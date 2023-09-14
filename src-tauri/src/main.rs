@@ -3,7 +3,7 @@
 
 use database::{database_insert, find_by_model, fuzzy_by_model, start_db};
 use tauri::Manager;
-use tauri_plugin_log::LogTarget;
+// use tauri_plugin_log::LogTarget;
 mod database;
 mod menus;
 
@@ -25,11 +25,11 @@ fn main() {
             Ok(())
         })
         .plugin(tauri_plugin_store::Builder::default().build())
-        .plugin(
-            tauri_plugin_log::Builder::default()
-                .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
-                .build(),
-        )
+        // .plugin(
+        //     tauri_plugin_log::Builder::default()
+        //         .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
+        //         .build(),
+        // )
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_persisted_scope::init())
         .menu(menu)
