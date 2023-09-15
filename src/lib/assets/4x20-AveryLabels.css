@@ -1,0 +1,17 @@
+.label-style {
+  /* overflow: hidden; */
+  /* padding: 1rem; */
+  /* margin: 0.0rem; */
+  gap: 0.25in;
+  max-width: 1.75in;
+  max-height: 0.50in;
+  text-align: left;
+  background-color: #ffffff;
+  border-style: dotted;
+  border-width: 2px;
+  border-color: #6B7280;
+}
+.grid-style {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}

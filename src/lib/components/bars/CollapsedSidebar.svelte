@@ -7,6 +7,7 @@
   import ToolsIcon from '~icons/ri/tools-line'
   import FlowIcon from "~icons/bi/diagram-3"
   import IOIcon from "~icons/solar/transfer-vertical-bold-duotone"
+  import PapersIcon from "~icons/mdi/papers-outline"
   import ArrowIcon from "~icons/simple-line-icons/arrow-up"
   import { page } from "$app/stores"
 
@@ -35,6 +36,9 @@
     </a></li>
     <li><a class="{classesActive('/production-settings')} mb-2.5" href="/production-settings">
       <span><ToolsIcon/></span>
+    </a></li>
+    <li><a class="{classesActive('/labels')} mb-2.5" href="/labels">
+      <span><PapersIcon/></span>
     </a></li>
     <li class="fixed bottom-0 my-auto pb-4">
       <hr class="mb-1"/>

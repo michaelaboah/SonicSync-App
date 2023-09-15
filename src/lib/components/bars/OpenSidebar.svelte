@@ -8,6 +8,7 @@
   import ToolsIcon from '~icons/ri/tools-line'
   import FlowIcon from "~icons/bi/diagram-3"
   import IOIcon from "~icons/solar/transfer-vertical-bold-duotone"
+  import PapersIcon from "~icons/mdi/papers-outline"
 
   $: classesActive = (href: string) => (href === $page.url.pathname ? 'variant-filled-primary' : '');
 </script>
@@ -41,6 +42,10 @@
     <li><a class="{classesActive('/production-settings')}" href="/production-settings">
       <span><ToolsIcon/></span>
       <span>Production</span>
+    </a></li>
+    <li><a class="{classesActive('/labels')}" href="/labels">
+      <span><PapersIcon/></span>
+      <span>Labels</span>
     </a></li>
     <li class="fixed bottom-0 my-auto pb-4">
       <hr class="mb-1"/>
