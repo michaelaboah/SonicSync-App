@@ -9,7 +9,7 @@
   "package": {
     "productName": "sonic-sync",
     "version": "0.0.2"
-  },
+  },  
   "tauri": {
     "allowlist": {
       "all": true,
@@ -58,7 +58,7 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true
     },
     "windows": [
       {
