@@ -60,6 +60,23 @@ pub fn find_by_model(db: tauri::State<Database>, model: String) -> Option<serde_
 }
 
 #[command]
+pub fn find_many_by_model(
+    db: tauri::State<Database>,
+    models: Vec<String>,
+) -> Vec<Option<models::Item>> {
+    // let mut session = db.start_session().unwrap();
+
+    let inv: Collection<models::Item> = db.collection("items");
+    let mut found_items = vec![];
+    for model in models {
+        let found_item = inv.find_one(doc! { "model": model }).unwrap();
+        found_items.push(found_item);
+    }
+
+    found_items
+}
+
+#[command]
 pub fn update_by_model(
     db: tauri::State<Database>,
     model: String,

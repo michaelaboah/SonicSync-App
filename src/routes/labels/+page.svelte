@@ -1,5 +1,6 @@
 <script lang="ts">
   import printJS from "print-js"
+  import { cableList } from "$lib/stores/equipment";
   let labels = Array(80).fill({
     name: "Name",
     address: "Address",
@@ -8,14 +9,12 @@
 
 
   function print() {
-    console.log()
     printJS({
       printable: "home",
       type: 'html',
       showModal: true,
-      // gridStyle: 'border: 2px solid #3971A5;',
-      css: "/home/michaelaboah/SoftwareEngineering/SonicSync-App/src/lib/assets/4x20-AveryLabels.css", 
-      // gridHeaderStyle: "display: none;",
+      css: "4x20-AveryLabels.css", 
+      font_size: "",
     })
   }
 
@@ -29,7 +28,7 @@
 <div class="w-fit mx-auto bg-gray-300 grid-style" id="home" bind:this={outer}>
   {#each labels as label, i (i)}
     <div class="label-style" >
-      {label.name}
+      <span class="cable-name">{label.name}</span>{i+1}
       <!-- {label.address} -->
       <!-- {label.city} -->
     </div>
@@ -39,19 +38,21 @@
   {/each}
 </div>
 
+
 <style>
+
+.cable-name {
+  font-size: 0.5rem;
+  line-height: 0.5rem; 
+  font-style: italic;
+}
+
+
 .label-style {
-  /* overflow: hidden; */
-  /* padding: 1rem; */
-  /* margin: 0.0rem; */
-  margin-left: 0.25in;
+  margin-right: 0.50in;
   width: 1.75in;
   height: 0.50in;
-  text-align: left;
-  background-color: #ffffff;
-  border-style: dotted;
-  border-width: 2px;
-  border-color: #6B7280;
+  text-align: center;
 }
 .grid-style {
   display: grid;

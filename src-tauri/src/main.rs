@@ -42,6 +42,7 @@ fn main() {
             database::delete_all,
             database::delete_by_model,
             database::update_by_model,
+            database::find_many_by_model,
             menus::events::save
         ])
         .run(ctx)

@@ -3,7 +3,8 @@
   import DownloadIcon from "~icons/ri/file-upload-line"
   import PhotoIcon from "~icons/ri/image-2-line"
   import StampIcon from "~icons/ph/stamp"
-  import { prodInfo } from "$lib/stores/project";
+  import TrashIcon from "~icons/bi/trash"
+  import { prodInfo, audioTeam } from "$lib/stores/project";
   let prodImage: string | undefined 
   let stampImage: string 
 
@@ -16,14 +17,79 @@
     imageUrl = URL.createObjectURL(file);
     console.log(imageUrl)
   }
+
+
+
+  let newRole = "Assistant Production Sound"
+
+  function addNewRole() {
+    $audioTeam = [...$audioTeam, { role: newRole, name: "", email: "", phone: "" }]
+  }
+
+  function removeRole(id: number) {
+    $audioTeam = $audioTeam.filter((_, i) => i !== id) 
+  }
+
 </script>
 
 <div class="flex flex-row w-full h-full p-4">
-  <section class="flex-grow w-1/2">
+  <section class="flex-grow w-1/2 ">
     <h2 class="h2">Team</h2> <h3 class="h6 italic mb-4 opacity-70">Add Team Members</h3> <hr class="my-4 mr-4"/>
 
-    <p class="italic">TBA</p> 
-   
+    <!-- <p class="italic">TBA</p>  -->
+
+
+    <div class="mr-4">
+    <table class="table">
+    
+      <thead>
+        <tr>
+          <th class="text-center">Role</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Email</th>
+          <th class="text-center">Phone</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {#each $audioTeam as { role, name, email, phone }, id }
+          <tr>
+            <td class="text font-semibold whitespace-nowrap p-5 border border-surface-300 dark:border-surface-500 max-w-fit" contenteditable bind:innerText={role}></td>
+            <td class="text-sm whitespace-nowrap p-5  border border-surface-300 dark:border-surface-500" contenteditable bind:innerText={name}></td>
+            <td class="text-sm whitespace-nowrap p-5  border border-surface-300 dark:border-surface-500" contenteditable bind:innerText={email}></td>
+            <td class="text-sm whitespace-nowrap p-5  border border-surface-300 dark:border-surface-500" contenteditable bind:innerText={phone}></td>
+            <td class="border border-surface-300 dark:border-surface-500">
+              <div class="flex justify-end mx-4">
+                <button class="btn btn-sm variant-filled-error" on:click={() => removeRole(id)}><TrashIcon/></button>
+              </div>
+            </td>
+          </tr> 
+        {/each}
+      </tbody>
+
+      <tfoot class="sticky bottom-0">
+        <tr class="">
+          <!-- <th colspan="3">Where?</th> -->
+          <td colspan="5">
+            <div class="flex items-center space-x-4 ">
+              <h3 class="h5 whitespace-nowrap">Add New Role</h3>
+              <input class="input text-sm" type="text" bind:value={newRole}>
+              <button class="btn variant-filled-secondary" on:click={addNewRole}>Add Role</button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+
+
+    </table>    
+</div>
+
+
+
+
+
+
 <!-- Team Details -->
   </section>
   <span class="divider-vertical h-full w-0" />
@@ -37,19 +103,19 @@
       <table class="table table-hover">
         <tbody>
             <tr>
-              <td class="flex"><p class="h6 py-auto">Production:</p></td>
+              <td class="w-1/5"><p class="h6 py-auto font-semibold">Production:</p></td>
               <td><input class="input" bind:value={$prodInfo.productionName}/></td>
             </tr>
             <tr>
-              <td class="flex"><p class="h6 py-auto">Director:</p></td>
+              <td class="flex"><p class="h6 py-auto font-semibold">Director:</p></td>
               <td><input class="input" bind:value={$prodInfo.director}/></td>
             </tr>
             <tr>
-              <td class="flex"><p class="h6 py-auto">Venue:</p></td>
+              <td class="flex"><p class="h6 py-auto font-semibold">Venue:</p></td>
               <td><input class="input" bind:value={$prodInfo.venue}/></td>
             </tr>
             <tr>
-              <td class="flex"><p class="h6 py-auto">Notes:</p></td>
+              <td class="flex"><p class="h6 py-auto font-semibold">Notes:</p></td>
               <td><textarea class="textarea" rows="3" bind:value={$prodInfo.notes}/></td>
             </tr>
         </tbody>

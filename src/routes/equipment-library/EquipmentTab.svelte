@@ -13,12 +13,19 @@
   let selectedItem: Equip | null = null 
   let infoModal = false;
   let isEditing = false;
+  let filterByModels = ""
+
+  $: if (filterByModels !== "") {
+    localFuzzySearch(filterByModels)
+  } else getEquipment()
 
   $: items = [] as Equip[]
   $: if (infoModal === false) {
     selectedItem = null;
     console.log(selectedItem)
   }
+
+
   async function getEquipment() {
     const response = await invoke<Equip[]>("get_all_items");
     items = response
@@ -30,14 +37,28 @@
   async function deleteItem(model: string) {
     const response = await invoke<Equip[]>("delete_by_model", { model });
     console.log(response)
-
   }
 
 
   async function updateItem() {
     const response = await invoke("update_item", { _id: selectedItem?._id, item: selectedItem })
-
     infoModal = false;  
+  }
+
+  async function localFuzzySearch(model: String) {
+    if (!model || model === "") {
+      return []
+    }
+
+    const response = await invoke<String[]>("fuzzy_by_model", { model })
+    
+    if (response.length === 0) {
+      return []
+    }
+    
+    const found_items = await invoke<Equip[]>("find_many_by_model", { models: response })
+
+    items = found_items;
   }
 
   
@@ -50,8 +71,10 @@
   </svelte:fragment>
 
   <svelte:fragment slot="trail">
-    <div class="">
-      <span class="">Add Equipment:</span> 
+    <div class="flex items-center space-x-2 justify-between">
+      <input class="input h-8" placeholder="Filter By Models..." type="text" bind:value={filterByModels}/>
+
+      <span class="whitespace-nowrap">Add Equipment:</span> 
       <button class="btn btn-icon variant-filled-secondary scale-75" on:click={() => {}}><span class="scale-150"><PlusIcon/></span></button>
     </div> 
   </svelte:fragment>

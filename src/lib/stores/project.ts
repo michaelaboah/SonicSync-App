@@ -1,7 +1,7 @@
 import { derived, writable, type Writable } from 'svelte/store';
 import type {
     Meta,
-    AudioTeam,
+    TeamRole,
     IO,
     ProductionInformation,
     Project,
@@ -16,7 +16,13 @@ export const ioList = writable<IO>({
     outputs: [],
 });
 
-export const audioTeam = writable<AudioTeam>()
+export const audioTeam = writable<TeamRole[]>([
+  { name:"", role: "Designer", email: "", phone: ""},
+  { name:"", role: "Production Sound", email: "", phone: ""},
+  { name:"", role: "A1", email: "", phone: ""},
+  { name:"", role: "A2", email: "", phone: ""},
+]);
+
 export const prodInfo = writable<ProductionInformation>({
   productionName: "",
   venue: "",
@@ -26,7 +32,7 @@ export const prodInfo = writable<ProductionInformation>({
 
 export const meta = writable<Meta>()
 
-export const project = derived<[Writable<ProductionInformation>, Writable<Gear[]>, Writable<IO>, Writable<AudioTeam>, Writable<Cable[]>, Writable<Meta>], Project>(
+export const project = derived<[Writable<ProductionInformation>, Writable<Gear[]>, Writable<IO>, Writable<TeamRole[]>, Writable<Cable[]>, Writable<Meta>], Project>(
     [prodInfo, gearList, ioList, audioTeam, cableList, meta],
     ([$prodInfo, $gearList, $ioList, $audioTeam, $cableList, $meta]) => {
         return { 
