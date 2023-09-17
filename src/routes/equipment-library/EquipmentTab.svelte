@@ -65,7 +65,7 @@
 
 </script>
 
-<AppBar class="variant-ringed-surface py-2 my-2 rounded mt-1" slotTrail="w-full">
+<AppBar class="variant-ringed-surface py-2 mb-2 rounded" slotTrail="w-full">
 
   <svelte:fragment slot="lead">
   </svelte:fragment>
@@ -88,13 +88,13 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>Model</th>
-				<th>Category</th>
-				<th>Manufacturer</th>
-				<th>Weight</th>
-				<th>Dimensions</th>
-				<th>Notes</th>
-				<th>Actions</th>
+				<th class="!py-1">Model</th>
+				<th class="!py-1">Category</th>
+				<th class="!py-1">Manufacturer</th>
+				<th class="!py-1">Weight</th>
+				<th class="!py-1">Dimensions</th>
+				<th class="!py-1">Notes</th>
+				<th class="!py-1">Actions</th>
 			</tr>
 		</thead>
 		<tbody >
@@ -103,21 +103,22 @@
          
           <tr class="">
 
-            <td class="!py-2" >{row.model}</td>
-            <td class="!py-2" >{row.category}</td>
-            <td class="!py-2" >{row.manufacturer}</td>
-            <td class="!py-2" >{row.weight}</td>
-            <td class="!py-2 w-1/6" >
+            <td class="!py-1.5" >{row.model}</td>
+            <td class="!py-1.5" >{row.category}</td>
+            <td class="!py-1.5" >{row.manufacturer}</td>
+            <td class="!py-1.5" >{row.weight}</td>
+            <td class="!py-1.5 w-1/6" >
                <span class="font-bold h5">L</span> x {row.dimensions.length}in 
                <span class="font-bold h5">W</span> x {row.dimensions.width}in
                <span class="font-bold h5">H</span> x {row.dimensions.height}in
             </td>
 
-            <td class="!py-2 w-1/5">
-              <textarea bind:value={row.notes} class="textarea text-xs italic" name="" id="" cols="8" rows="1"></textarea>
+            <td class="!py-1.5 w-1/5">
+              <p class="italic">"{row.notes}"</p>
+              <!-- <textarea bind:value={row.notes} class="textarea text-xs italic" name="" id="" cols="8" rows="1"></textarea> -->
             </td>
 
-            <td class="!py-2">
+            <td class="!py-1.5">
 
               <div class="flex flex-row w-10 gap-2">
                 <button class="btn btn-sm variant-filled-primary" on:click={() => {infoModal = true; selectedItem = row}}><span><InfoIcon/></span></button> 

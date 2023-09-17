@@ -1,7 +1,8 @@
 name: "publish"
 
 env: 
-  VITE_GRAPHQL_ENDPOINT_CLOUD: "https://api.sonic-sync.com/graphql"
+  # VITE_GRAPHQL_ENDPOINT_CLOUD: "https://api.sonic-sync.com/graphql"
+  PUBLIC_API_HOST: "https://api.sonic-sync.com"
 on:
   workflow_dispatch: 
   push:
