@@ -1,4 +1,4 @@
-name: "publish"
+name: "release"
 
 env: 
   # VITE_GRAPHQL_ENDPOINT_CLOUD: "https://api.sonic-sync.com/graphql"
