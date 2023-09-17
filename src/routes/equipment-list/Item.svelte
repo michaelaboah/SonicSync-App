@@ -7,7 +7,7 @@
   import PlusIcon from "~icons/ri/add-circle-line"
   import TrashIcon from "~icons/bi/trash"
 	import { invoke } from '@tauri-apps/api/tauri';
-
+  import { PUBLIC_API_HOST } from "$env/static/public"
   export let gear: Gear
 
   let cloudSearch = false; // Should be false by default to promote usage of local data before cloud and also reduce connectivity issues when offline
@@ -82,7 +82,7 @@
 
   // Search for item on the cloud and store in database by default
   async function cloudFind(model: String) {
-    const cloudResponse = await fetch(`http://localhost:8080/queries/find-model/${model}`)
+    const cloudResponse = await fetch(PUBLIC_API_HOST + `/queries/find-model/${model}`)
     const json = await cloudResponse.json()
     
     gear.equipment = json.data
@@ -109,7 +109,7 @@
     // Clear the modelList from previous queries
     modelList = Promise.resolve(modelList.then((x) => x.filter(() => false)));
 
-    const response = await fetch(`http://localhost:8080/queries/fuzzy-find/${model}`)
+    const response = await fetch(PUBLIC_API_HOST + `/queries/fuzzy-find/${model}`)
 
     const json: { data: String[] } = await response.json()
 

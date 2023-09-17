@@ -9,15 +9,11 @@ export type ProductionInformation = {
     notes?: string
 }
 
-export type AudioTeam = {
-  designer: {name: string, email: string, phone: string},
-  associateDesigner?: {name: string, email: string, phone: string},
-  asstDesigner?: {name: string, email: string, phone: string}, 
-  prodSound?: {name: string, email: string, phone: string}, 
-  asstProdSound?: {name: string, email: string, phone: string}, 
-  audio1?: {name: string, email: string, phone: string}, 
-  audio2?: {name: string, email: string, phone: string},
-  notes?: string
+export type TeamRole = { 
+  role: string,
+  name: string,
+  email: string,
+  phone: string 
 }
 
 
@@ -42,7 +38,7 @@ export type IO = {
 
 export type Project = {
   prodInfo: ProductionInformation
-  audioTeam: AudioTeam
+  audioTeam: TeamRole[]
   ioList: IO
   gearList: Gear[]
   cableList: Cable[]

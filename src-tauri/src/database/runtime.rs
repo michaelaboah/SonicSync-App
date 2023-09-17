@@ -1,7 +1,7 @@
 use polodb_core::{bson::doc, Collection, Database};
 use std::{thread, time};
 
-const DATABASE_FILE_NAME: &'static str = "primary-polo.db";
+const DATABASE_FILE_NAME: &'static str = "database/primary-polo.db";
 
 /// Starts Database
 ///
@@ -9,11 +9,9 @@ const DATABASE_FILE_NAME: &'static str = "primary-polo.db";
 ///     else
 /// open database and return
 pub fn start_db(app_data_dir: &mut std::path::PathBuf) -> Database {
-    if !app_data_dir.is_dir() {
-        app_data_dir.push("database");
-        // Tell the user that the resolved app directory isn't a directory
-        std::fs::create_dir_all(&app_data_dir).unwrap();
-    }
+    assert!(app_data_dir.is_dir());
+    // Tell the user that the resolved app directory isn't a directory
+    std::fs::create_dir_all(&app_data_dir.join("database")).unwrap();
 
     let db_path = app_data_dir.join(DATABASE_FILE_NAME);
 

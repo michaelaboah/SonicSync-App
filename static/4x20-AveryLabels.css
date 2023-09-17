@@ -1,0 +1,18 @@
+.cable-name {
+  font-size: 0.80rem;
+  line-height: 1rem; 
+}
+.label-style {
+  margin-left: 0.14in;
+  max-width: 1.75in;
+  max-height: 0.50in;
+  text-align: center;
+  background-color: red;
+}
+.grid-style {
+  margin-top: 0.5in;
+  margin-bottom: 0.25in;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+}

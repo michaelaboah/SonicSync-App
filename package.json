@@ -1,6 +1,6 @@
 {
     "name": "Sonic Sync",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "private": true,
     "scripts": {
         "dev": "vite dev",
@@ -45,6 +45,7 @@
         "@tauri-apps/api": "^1.4.0",
         "@tauri-controls/svelte": "^0.1.2",
         "@urql/svelte": "^4.0.4",
+        "print-js": "^1.6.0",
         "svelvet": "^8.1.0",
         "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#v1",
         "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1"
