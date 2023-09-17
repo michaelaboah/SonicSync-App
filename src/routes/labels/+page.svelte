@@ -27,8 +27,8 @@
 
 <div class="w-fit mx-auto bg-gray-300 grid-style" id="home" bind:this={outer}>
   {#each labels as label, i (i)}
-    <div class="label-style" >
-      <span class="cable-name">{label.name}</span>{i+1}
+    <div class="label-style rounded-md bg-white" >
+      <span class="cable-name"><p class="text-black">{label.name}</p></span>{i+1}
       <!-- {label.address} -->
       <!-- {label.city} -->
     </div>

@@ -75,7 +75,7 @@
       <input class="input h-8" placeholder="Filter By Models..." type="text" bind:value={filterByModels}/>
 
       <span class="whitespace-nowrap">Add Equipment:</span> 
-      <button class="btn btn-icon variant-filled-secondary scale-75" on:click={() => {}}><span class="scale-150"><PlusIcon/></span></button>
+      <button class="btn btn-icon variant-filled-secondary scale-105" on:click={() => {}}><span class="scale-150"><PlusIcon/></span></button>
     </div> 
   </svelte:fragment>
 
@@ -106,7 +106,7 @@
             <td class="!py-1.5" >{row.model}</td>
             <td class="!py-1.5" >{row.category}</td>
             <td class="!py-1.5" >{row.manufacturer}</td>
-            <td class="!py-1.5" >{row.weight}</td>
+            <td class="!py-1.5" >{row.weight} lbs</td>
             <td class="!py-1.5 w-1/6" >
                <span class="font-bold h5">L</span> x {row.dimensions.length}in 
                <span class="font-bold h5">W</span> x {row.dimensions.width}in

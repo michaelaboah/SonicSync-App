@@ -28,6 +28,8 @@ export const prodInfo = writable<ProductionInformation>({
   venue: "",
   notes: "",
   director: "",
+  showImage: "",
+  designerStamp: "",
 });
 
 export const meta = writable<Meta>()
