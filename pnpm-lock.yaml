@@ -17,9 +17,9 @@ dependencies:
   '@urql/svelte':
     specifier: ^4.0.4
     version: 4.0.4(graphql@16.8.0)(svelte@4.2.0)
-  print-js:
-    specifier: ^1.6.0
-    version: 1.6.0
+  svelte-printpdf:
+    specifier: 1.0.2-metadata
+    version: 1.0.2-metadata
   svelvet:
     specifier: ^8.1.0
     version: 8.1.0(svelte@4.2.0)
@@ -3825,10 +3825,6 @@ packages:
     hasBin: true
     dev: true
 
-  /print-js@1.6.0:
-    resolution: {integrity: sha512-BfnOIzSKbqGRtO4o0rnj/K3681BSd2QUrsIZy/+WdCIugjIswjmx3lDEZpXB2ruGf9d4b3YNINri81+J0FsBWg==}
-    dev: false
-
   /promise@7.3.1:
     resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
     dependencies:
@@ -4290,6 +4286,10 @@ packages:
       svelte: 4.2.0
       typescript: 5.2.2
     dev: true
+
+  /svelte-printpdf@1.0.2-metadata:
+    resolution: {integrity: sha512-669cRonUfjG9tS9Y9o6I/ukIjRAWZXT3ZI+ze3Ew9oulalRFTUE1UMmtaSBmHILJTuaiFGpgUNC04ZOS74fV0A==}
+    dev: false
 
   /svelte2tsx@0.5.23(svelte@4.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-jYFnugTQRFmUpvLXPQrKzVYcW5ErT+0QCxg027Zx9BuvYefMZFuoBSTDYe7viPEFGrPPiLgT2m7f5n9khE7f7Q==}
