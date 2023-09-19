@@ -40,6 +40,9 @@
     <li><a class="{classesActive('/labels')} mb-2.5" href="/labels">
       <span><PapersIcon/></span>
     </a></li>
+    <li><a class="{classesActive('/printing')} mb-2.5" href="/printing">
+      <span><PapersIcon/></span>
+    </a></li>
     <li class="fixed bottom-0 my-auto pb-4">
       <hr class="mb-1"/>
       <div class="flex flex-row">
