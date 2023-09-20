@@ -1,7 +1,7 @@
 
 <script lang="ts">
+  import { Tab, TabGroup } from "@skeletonlabs/skeleton";
 	import { invoke } from "@tauri-apps/api/tauri";
-  import { WebviewWindow } from "@tauri-apps/api/window"
   import PrintPdf, { Page } from "svelte-printpdf";
   
   let labels = Array(80).fill({
@@ -11,14 +11,18 @@
   });
 
   let print = false;
-
-  const webview = new WebviewWindow("id", {
-    url: "https://stackblitz.com/edit/js-hkxfhq?file=index.js",
-  })
-  invoke("custom_print")  
+  
+  let tabSet = 0
 </script>
 
-  
+ 
+
+<TabGroup>
+  <Tab bind:group={tabSet} value={0} name="Labels">
+    <svelte:fragment slot="lead"></svelte:fragment>
+    <span>Labels</span>
+  </Tab>
+</TabGroup>
 
 <!-- <button class="btn variant-ghost" on:click={testPrint}>Print</button> -->
 
