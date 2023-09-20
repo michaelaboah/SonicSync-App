@@ -4,14 +4,15 @@
     "private": true,
     "scripts": {
         "dev": "vite dev",
-        "build": "vite build",
+        "build": "vite build && npm run rename-binary",
         "preview": "vite preview",
         "test": "playwright test",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "prettier --plugin-search-dir . --check .",
         "format": "prettier --plugin-search-dir . --write .",
-        "gen": "graphql-codegen --config gql-codegen.yml"
+        "gen": "graphql-codegen --config gql-codegen.yml",
+        "rename-binary": "node scripts/rename-binaries.js"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "5.0.0",
