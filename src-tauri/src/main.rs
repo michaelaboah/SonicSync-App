@@ -43,7 +43,8 @@ fn main() {
             database::delete_by_model,
             database::update_by_model,
             database::find_many_by_model,
-            menus::events::save
+            menus::events::save,
+            menus::commands::custom_print,
         ])
         .run(ctx)
         .expect("error while running tauri application");

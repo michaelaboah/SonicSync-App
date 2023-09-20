@@ -6,6 +6,7 @@ pub fn menu_event_handler(event: tauri::WindowMenuEvent) {
         "save" => unimplemented!(),
         "save_as" => save_project("save", event),
         // "open" => unimplemented!(), // create a new window
+        "print_all" => print_all(), // create a new window
         "load_project" => load_project("load-project", event),
         "palette" => unimplemented!(),
         "preferences" => unimplemented!(),
@@ -14,6 +15,14 @@ pub fn menu_event_handler(event: tauri::WindowMenuEvent) {
         }
         _ => unimplemented!(),
     }
+}
+use std::process::Command;
+fn print_all() {
+    #[cfg(target_os = "macos")]
+    Command::new("osascript")
+    .arg(r#"-e tell application "Preview" to print POSIX file "/Users/michaelaboah/Desktop/DeleteExample.pdf" with print dialog"#)
+    .spawn()
+    .unwrap();
 }
 
 fn new_project(event: tauri::WindowMenuEvent) {

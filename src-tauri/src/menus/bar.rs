@@ -7,6 +7,7 @@ pub fn generate_menu_bar(app_name: &str) -> Menu {
     let open = CustomMenuItem::new("open", "Open File").accelerator("cmdOrControl+O");
     let load = CustomMenuItem::new("load_project", "Load Project");
     let new = CustomMenuItem::new("new", "New Project").accelerator("cmdOrControl+N");
+    let print = CustomMenuItem::new("print_all", "Print All").accelerator("cmdOrControl+P");
     let open_preferences =
         CustomMenuItem::new("preferences", "Preferences").accelerator("cmdOrControl+,");
     let open_palette =
@@ -29,6 +30,7 @@ pub fn generate_menu_bar(app_name: &str) -> Menu {
                 MenuItem::Quit.into(),
             ])
             .add_submenu(database_submenu)
+            .add_item(print)
             .add_item(open_preferences),
         )),
         #[cfg(target_os = "macos")]
