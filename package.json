@@ -4,15 +4,14 @@
     "private": true,
     "scripts": {
         "dev": "vite dev",
-        "build": "vite build && npm run rename-binary",
+        "build": "vite build",
         "preview": "vite preview",
         "test": "playwright test",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "prettier --plugin-search-dir . --check .",
         "format": "prettier --plugin-search-dir . --write .",
-        "gen": "graphql-codegen --config gql-codegen.yml",
-        "rename-binary": "node scripts/rename-binaries.js"
+        "gen": "graphql-codegen --config gql-codegen.yml"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "5.0.0",
@@ -26,7 +25,6 @@
         "@tailwindcss/forms": "^0.5.4",
         "@tauri-apps/cli": "^1.4.0",
         "autoprefixer": "^10.4.14",
-        "execa": "^8.0.1",
         "postcss": "^8.4.24",
         "postcss-load-config": "^4.0.1",
         "prettier": "^2.8.0",
@@ -47,6 +45,7 @@
         "@tauri-apps/api": "^1.4.0",
         "@tauri-controls/svelte": "^0.1.2",
         "@urql/svelte": "^4.0.4",
+        "jspdf": "^2.5.1",
         "svelte-printpdf": "1.0.2-metadata",
         "svelvet": "^8.1.0",
         "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#v1",
