@@ -45,6 +45,7 @@ fn main() {
             database::find_many_by_model,
             menus::events::save,
             menus::commands::custom_print,
+            menus::commands::write_to_pdf,
         ])
         .run(ctx)
         .expect("error while running tauri application");

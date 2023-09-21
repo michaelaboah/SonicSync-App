@@ -20,12 +20,6 @@
         "all": false,
         "request": true,
         "scope": ["https://api.sonic-sync.com/"]
-      },
-      "shell": {
-        "sidecar": true,
-        "scope": [
-          { "name": "binaries/wkhtmltopdf", "sidecar": true }
-        ]
       }
     },
     "bundle": {
@@ -34,10 +28,7 @@
       "copyright": "",
       "deb": {
         "depends": [] },
-      "externalBin": [
-        "binaries/wkhtmltoimage",
-        "binaries/wkhtmltopdf"
-      ],
+      "externalBin": [],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",

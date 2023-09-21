@@ -29,9 +29,11 @@ tauri-plugin-persisted-scope = { git = "https://github.com/tauri-apps/plugins-wo
 bson = "2.6.1"
 crossbeam = { version = "0.8.2", features = ["crossbeam-channel"] }
 reqwest = "0.11.20"
+base64 = "0.21.4"
 
 
 [dev-dependencies]
+base64 = "0.21.4"
 tokio = { version = "1.29.1", features = ["full"] }
 # tauri-plugin-window = "2.0.0-alpha.1"
 # tauri-plugin-os = "2.0.0-alpha.1"
