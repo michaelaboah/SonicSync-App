@@ -12,8 +12,9 @@ pub async fn custom_print(window: tauri::Window) {
         .unwrap();
 }
 
+/// Automatically save to a paperwork folder
 #[command]
-pub fn write_to_pdf(path: &str, base64: &str) {
+pub fn write_to_pdf(filename: &str, base64: &str) {
     let bytes = general_purpose::STANDARD.decode(base64).unwrap();
-    std::fs::write(path, &bytes).unwrap();
+    std::fs::write(filename, &bytes).unwrap();
 }

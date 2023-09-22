@@ -7,7 +7,7 @@
   import PrintPdf, { Page } from "svelte-printpdf";
 	import { onMount } from "svelte";
   
-  let labels = Array(80).fill({
+  let labels = Array(240).fill({
     name: "Name",
     address: "Address",
     city: "City",
@@ -19,48 +19,39 @@
 
   let target: HTMLElement
 
-  onMount(() => {
+  function customPrint() {
     const doc = new jsPDF({orientation: "p", unit: "px", format: "letter", hotfixes: ["px_scaling"] });
     doc.html(target, {
       callback: (doc) => {
         let base64 = doc.output("datauristring").split(",")[1]
-        // console.log(base64)
-        invoke("write_to_pdf", { path: "example.pdf", base64 })
+        invoke("write_to_pdf", { filename: "example.pdf", base64 })
       },
     })
-    // console.log(target.outerHTML)
-    // doc.text("Hello World", 10, 10);
-    // doc.save("a4.pdf");
+  }
 
-    // console.log(doc.output("datauristring"))
-  })
+  let pages: any[][] = [];
+  for (let i = 0; i < labels.length; i += 80) {
+    pages.push(labels.slice(i, i + 80));
+  }
 </script>
 
- 
 
-<TabGroup>
-  <Tab bind:group={tabSet} value={0} name="Labels">
-    <svelte:fragment slot="lead"></svelte:fragment>
-    <span>Labels</span>
-  </Tab>
-</TabGroup>
-
-<button class="btn variant-ghost" on:click={() => print = true}>Print</button>
-
+  <button class="btn variant-ringed-primary" on:click={customPrint}>Cus</button>
 
 <PrintPdf bind:print={print}>
-  <div class="mx-auto px-auto w-[8.5in] h-[11in] bg-white" id="printTarget" bind:this={target}>
-     <!-- Page -->
-    <div class="grid grid-cols-4 gap-x-[0.4in] my-[0.5in] mx-[0.3in] h-[10in]">
-    {#each labels as label, i (i)}
-      <div class="w-[1.75in] max-w-[1.75in] rounded max-h-[0.5in] h-[0.5in] bg-red-100">
-        <span class="text-lg italic">{label.name}</span>{i+1}
+    <div class="mx-auto px-auto w-[8.5in]  bg-white" bind:this={target}>
+  {#each pages as pageLabels, pageIndex}
+      <!-- Page -->
+      <div class="grid grid-cols-4 gap-x-[0.4in] my-[0.5in] mx-[0.3in] h-[10in]">
+        {#each pageLabels as label, i (i)}
+          <div class="w-[1.75in] max-w-[1.75in] rounded max-h-[0.5in] h-[0.5in] bg-red-100">
+            <span class="text-lg font-bold">{label.name}</span>{i+1}
+          </div>
+        {/each}
       </div>
-      {#if (i + 1) % 80 === 0}
-        <div class="clear-left block"></div>
+      {#if pageIndex < pages.length - 1}
+        <div style="page-break-after: always;" class="my-[1in]"></div>
       {/if}
-    {/each}
-</div>
-  </div>
-</PrintPdf>
-<!---->
+  {/each}
+    </div>
+</PrintPdf>---button
