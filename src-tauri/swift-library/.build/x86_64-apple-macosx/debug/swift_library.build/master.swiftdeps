@@ -1,0 +1,10 @@
+version: "Apple Swift version 5.7.1 (swiftlang-5.7.1.135.3 clang-1400.0.29.51)"
+options: "7d060428515b8a7f6ab7a59874118b869c6c796320a4478f53cad4aa0a0d7e97"
+build_start_time: [1695757521, 469454050]
+build_end_time: [1695757522, 253504991]
+inputs:
+  ? "/Users/michaelaboah/SoftwareEngineering/SonicSync-App/src-tauri/swift-library/Sources/swift-library/generated/SwiftBridgeCore.swift"
+  : [1695757520, 614970445]
+  ? "/Users/michaelaboah/SoftwareEngineering/SonicSync-App/src-tauri/swift-library/Sources/swift-library/generated/rust-calls-swift/rust-calls-swift.swift"
+  : [1695757520, 614748001]
+  "/Users/michaelaboah/SoftwareEngineering/SonicSync-App/src-tauri/swift-library/Sources/swift-library/swift-library.swift": [1695757213, 845808506]

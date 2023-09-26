@@ -1,0 +1,4 @@
+module swift_library {
+    header "/Users/michaelaboah/SoftwareEngineering/SonicSync-App/src-tauri/swift-library/.build/x86_64-apple-macosx/debug/swift_library.build/swift-library-Swift.h"
+    requires objc
+}
