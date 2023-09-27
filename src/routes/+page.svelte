@@ -6,7 +6,6 @@
 
   // invoke('fuzzy_by_model', { model: "Q"}).then(x => console.log(x))
  
-  invoke("print_dialog")
 
   // function seeProject() {
     // console.log($project)

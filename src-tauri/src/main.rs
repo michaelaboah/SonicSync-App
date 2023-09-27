@@ -46,69 +46,11 @@ fn main() {
             menus::events::save,
             menus::commands::custom_print,
             menus::commands::write_to_pdf,
-            print_dialog,
+            dialogs::print_dialog,
         ])
         .run(ctx)
         .expect("error while running tauri application");
 }
-
-use base64::{engine::general_purpose, Engine as _};
-
-// #[cfg(target_os = "macos")]
-use cocoa::base::{id, nil, BOOL, NO, YES};
-use objc::{
-    class,
-    declare::ClassDecl,
-    msg_send,
-    runtime::{Class, Sel},
-    sel, sel_impl,
-};
-
-use std::ptr::null;
-
-#[command]
-fn print_dialog(window: tauri::Window) {
-    let pdf_data = std::fs::read("example.pdf").unwrap();
-
-    let _ = window.with_webview(move |view| {
-        // let bytes: &[u8] = &general_purpose::STANDARD.decode(&pdf_data).unwrap();
-
-        let can_print: BOOL = unsafe {
-            msg_send![
-              view.inner(),
-              respondsToSelector: sel!(printOperationWithPrintInfo:)
-            ]
-        };
-        if can_print != YES {
-            return ();
-        }
-
-        // let c = class!(PDFDocument);
-        //
-        // for ivars in c.instance_methods().iter() {
-        //     if ivars.name().name().to_lowercase().contains("print") {
-        //         dbg!(ivars.name().name());
-        //     }
-        // }
-
-        unsafe {
-            let data: id = msg_send![class!(NSData), alloc];
-            let data: id = msg_send![data, initWithBytes: pdf_data.as_ptr() length: pdf_data.len()];
-
-            let doc: id = msg_send![class!(PDFDocument), alloc];
-            let doc: id = msg_send![doc, initWithData: data];
-
-            let print_info: id = msg_send![class!(NSPrintInfo), sharedPrintInfo];
-
-            let print_ops: id =
-                msg_send![doc, printOperationForPrintInfo: print_info scalingMode: 2 autoRotate: NO];
-
-            let () = msg_send![print_ops, runOperation];
-        }
-    });
-}
-
-use std::ffi::c_void;
 
 // #[swift_bridge::bridge]
 // pub mod ffi {
