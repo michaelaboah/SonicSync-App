@@ -1,7 +1,9 @@
+#[cfg(target_os = "macos")]
 use base64::{engine::general_purpose, Engine as _};
 
 #[cfg(target_os = "macos")]
 use cocoa::base::{id,  BOOL, NO, YES};
+#[cfg(target_os = "macos")]
 use objc::{
     class,
     msg_send,

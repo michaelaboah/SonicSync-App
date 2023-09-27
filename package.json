@@ -49,6 +49,7 @@
         "svelte-printpdf": "1.0.2-metadata",
         "svelvet": "^8.1.0",
         "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#v1",
+        "tauri-plugin-printing-ext-api": "^0.0.1",
         "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1"
     }
 }

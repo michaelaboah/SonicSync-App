@@ -4,7 +4,7 @@
   import PrintPdf, { Page } from "svelte-printpdf";
 	import { cableList } from "$lib/stores/equipment";
 	import CableLable from "$lib/components/print/CableLable.svelte";
-  
+  import { printDialog } from "tauri-plugin-printing-ext-api" 
   let labels = $cableList.map((x) => {
     return {name: x.name}
   });
@@ -15,24 +15,17 @@
 
   let target: HTMLElement
 
-  function customPrint() {
-    const doc = new jsPDF({orientation: "p", unit: "px", format: "letter", hotfixes: ["px_scaling"] });
-    doc.html(target, {
-      callback: (doc) => {
-        let base64 = doc.output("datauristring").split(",")[1]
-        invoke("print_dialog", { base64 })
-      },
-    })
-  }
 
   let pages: any[][] = [];
   for (let i = 0; i < labels.length; i += 80) {
     pages.push(labels.slice(i, i + 80));
   }
+
+
 </script>
 
 
-<button class="btn variant-ringed-primary" on:click={customPrint}>Cus</button>
+<button class="btn variant-ringed-primary" on:click={() => printDialog(target)}>Cus</button>
 
 <PrintPdf bind:print={print}>
     <div class="mx-auto px-auto w-[8.5in]  bg-white" bind:this={target}>

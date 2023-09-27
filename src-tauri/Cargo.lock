@@ -3397,12 +3397,8 @@ dependencies = [
 name = "sonic-sync"
 version = "0.0.3"
 dependencies = [
- "base64 0.21.4",
- "bson",
- "cocoa 0.25.0",
  "crossbeam",
  "log",
- "objc",
  "polodb_core",
  "reqwest",
  "serde",
@@ -3411,6 +3407,7 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-log",
  "tauri-plugin-persisted-scope",
+ "tauri-plugin-printing-ext",
  "tauri-plugin-store",
  "tauri-plugin-window-state",
  "tokio",
@@ -3778,6 +3775,18 @@ dependencies = [
  "serde_json",
  "tauri",
  "thiserror",
+]
+
+[[package]]
+name = "tauri-plugin-printing-ext"
+version = "0.0.0"
+source = "git+https://github.com/michaelaboah/tauri-plugin-printing-ext#efa19395811fbcddb39c943f4b298dee830e41d5"
+dependencies = [
+ "base64 0.21.4",
+ "bson",
+ "cocoa 0.25.0",
+ "objc",
+ "tauri",
 ]
 
 [[package]]

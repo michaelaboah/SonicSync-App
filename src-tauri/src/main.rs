@@ -2,8 +2,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use database::{database_insert, find_by_model, fuzzy_by_model, start_db};
-use tauri::{self, command, Manager};
+use tauri::Manager;
 // use tauri_plugin_log::LogTarget;
+
 mod database;
 mod dialogs;
 mod menus;
@@ -12,7 +13,7 @@ fn main() {
 
     let menu = menus::bar::generate_menu_bar(&ctx.package_info().name);
 
-    tauri::Builder::default()
+    let build = tauri::Builder::default()
         .setup(move |app| {
             let mut app_data_dir = app.path_resolver().app_local_data_dir().expect(
                 "A 'Local App Data Directory' was not found on your system. Cannot run program",
@@ -32,6 +33,7 @@ fn main() {
         // )
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_persisted_scope::init())
+        .plugin(tauri_plugin_printing_ext::init())
         .menu(menu)
         .on_menu_event(menus::events::menu_event_handler)
         .invoke_handler(tauri::generate_handler![
@@ -44,17 +46,9 @@ fn main() {
             database::update_by_model,
             database::find_many_by_model,
             menus::events::save,
-            menus::commands::custom_print,
-            menus::commands::write_to_pdf,
-            dialogs::print_dialog,
-        ])
+        ]);
+
+    build
         .run(ctx)
         .expect("error while running tauri application");
 }
-
-// #[swift_bridge::bridge]
-// pub mod ffi {
-//     extern "Swift" {
-//         fn run_print_dialog(view: *const c_void, ns_window: *const c_void, data: Vec<u8>);
-//     }
-// }

@@ -20,18 +20,17 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.4.0", features = ["api-all"] }
 polodb_core = "4.4.0"
 log = "0.4.19"
+crossbeam = { version = "0.8.2", features = ["crossbeam-channel"] }
+reqwest = "0.11.20"
 
 # Tauri Plugins
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-persisted-scope = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
-crossbeam = { version = "0.8.2", features = ["crossbeam-channel"] }
-reqwest = "0.11.20"
-base64 = "0.21.4"
-cocoa = "0.25.0"
-objc = "0.2.7"
-bson = "2.6.1"
+
+# [target.'cfg(macos)'.dependencies]
+tauri-plugin-printing-ext = { git = "https://github.com/michaelaboah/tauri-plugin-printing-ext", features = ["macos-fix"] }
 
 
 [dev-dependencies]

@@ -28,10 +28,13 @@ dependencies:
     version: 8.1.0(svelte@4.2.0)
   tauri-plugin-log-api:
     specifier: github:tauri-apps/tauri-plugin-log#v1
-    version: github.com/tauri-apps/tauri-plugin-log/9075595196d5a66f8f3265d2aaf7e2ffeb4cb2ab
+    version: github.com/tauri-apps/tauri-plugin-log/6f56109458b09942bfc6442d32ad8637c4e6a314
+  tauri-plugin-printing-ext-api:
+    specifier: ^0.0.1
+    version: 0.0.1
   tauri-plugin-store-api:
     specifier: github:tauri-apps/tauri-plugin-store#v1
-    version: github.com/tauri-apps/tauri-plugin-store/a65ce9bfb168a9a3cd7ed4102b9f22770cc3abfa
+    version: github.com/tauri-apps/tauri-plugin-store/66e06b7830037fdae0b42b5499e23334eaf4e017
 
 devDependencies:
   '@graphql-codegen/cli':
@@ -4504,6 +4507,14 @@ packages:
       - ts-node
     dev: true
 
+  /tauri-plugin-printing-ext-api@0.0.1:
+    resolution: {integrity: sha512-RINKXq7D9sO0AJZiTA0jl0yCfeUdAwIRn4aXF42IbifhgpDC2VEPSEtSA1i1Eqfds94O07yob45nWgUEnN57rg==}
+    dependencies:
+      '@tauri-apps/api': 1.4.0
+      jspdf: 2.5.1
+      tslib: 2.6.2
+    dev: false
+
   /text-segmentation@1.0.3:
     resolution: {integrity: sha512-iOiPUo/BGnZ6+54OsWxZidGCsdU8YbE4PSpdPinp7DeMtUJNJBoJ/ouUSTJjHkh1KntHaltHl/gDs2FC4i5+Nw==}
     dependencies:
@@ -4587,7 +4598,6 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: true
 
   /type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
@@ -4928,16 +4938,16 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/tauri-apps/tauri-plugin-log/9075595196d5a66f8f3265d2aaf7e2ffeb4cb2ab:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/9075595196d5a66f8f3265d2aaf7e2ffeb4cb2ab}
+  github.com/tauri-apps/tauri-plugin-log/6f56109458b09942bfc6442d32ad8637c4e6a314:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/6f56109458b09942bfc6442d32ad8637c4e6a314}
     name: tauri-plugin-log-api
     version: 0.0.0
     dependencies:
       '@tauri-apps/api': 1.4.0
     dev: false
 
-  github.com/tauri-apps/tauri-plugin-store/a65ce9bfb168a9a3cd7ed4102b9f22770cc3abfa:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-store/tar.gz/a65ce9bfb168a9a3cd7ed4102b9f22770cc3abfa}
+  github.com/tauri-apps/tauri-plugin-store/66e06b7830037fdae0b42b5499e23334eaf4e017:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-store/tar.gz/66e06b7830037fdae0b42b5499e23334eaf4e017}
     name: tauri-plugin-store-api
     version: 0.0.0
     dependencies:
