@@ -3811,7 +3811,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-printing-ext"
 version = "0.0.4"
-source = "git+https://github.com/michaelaboah/tauri-plugin-printing-ext#8a356ae4a149f7c8c4978ccd326faf8d9170b212"
+source = "git+https://github.com/michaelaboah/tauri-plugin-printing-ext#32274ba23609324f8f7db37b721f4b8f723a735c"
 dependencies = [
  "base64 0.21.4",
  "bson",

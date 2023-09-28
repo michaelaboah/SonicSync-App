@@ -7,6 +7,7 @@ use tauri::Manager;
 mod database;
 mod menus;
 fn main() {
+    std::env::set_var("CG_PDF_VERBOSE", "true");
     let ctx = tauri::generate_context!();
 
     let menu = menus::bar::generate_menu_bar(&ctx.package_info().name);

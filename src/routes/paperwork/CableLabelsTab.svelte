@@ -20,6 +20,7 @@
 
         callback: (doc) => {
           let base64 = doc.output("datauristring").split(",")[1]
+          // console.log("how often does this run?")
           printDialog(base64);
         },
 
