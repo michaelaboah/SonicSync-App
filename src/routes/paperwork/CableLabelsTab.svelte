@@ -1,6 +1,5 @@
 <script lang="ts">
   import { jsPDF } from "jspdf"
-	import { invoke } from "@tauri-apps/api/tauri";
   import PrintPdf, { Page } from "svelte-printpdf";
 	import { cableList } from "$lib/stores/equipment";
 	import CableLable from "$lib/components/print/CableLable.svelte";
@@ -9,12 +8,23 @@
     return {name: x.name}
   });
 
-  // $: if (cableList)
   let print = false;
   
 
   let target: HTMLElement
 
+  function macosPrint(target: HTMLElement) {
+    const doc = new jsPDF({ orientation: "p", unit: "px", format: "letter", hotfixes: ["px_scaling"] });
+
+      doc.html(target, {
+
+        callback: (doc) => {
+          let base64 = doc.output("datauristring").split(",")[1]
+          printDialog(base64);
+        },
+
+      })
+  }
 
   let pages: any[][] = [];
   for (let i = 0; i < labels.length; i += 80) {
@@ -25,7 +35,11 @@
 </script>
 
 
-<button class="btn variant-ringed-primary" on:click={() => printDialog(target)}>Cus</button>
+{#if navigator.userAgent.includes("Mac")}  
+  <button class="btn variant-ringed-primary" on:click={() => macosPrint(target)}>Cus</button>
+{:else}
+  <button class="btn variant-ringed-primary" on:click={() => print = true}>Cus</button>
+{/if}
 
 <PrintPdf bind:print={print}>
     <div class="mx-auto px-auto w-[8.5in]  bg-white" bind:this={target}>
