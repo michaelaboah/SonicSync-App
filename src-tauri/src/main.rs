@@ -4,7 +4,6 @@
 use database::{database_insert, find_by_model, fuzzy_by_model, start_db};
 use tauri::Manager;
 // use tauri_plugin_log::LogTarget;
-
 mod database;
 mod dialogs;
 mod menus;
