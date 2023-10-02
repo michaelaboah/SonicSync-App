@@ -22,6 +22,8 @@ polodb_core = "4.4.0"
 log = "0.4.19"
 crossbeam = { version = "0.8.2", features = ["crossbeam-channel"] }
 reqwest = "0.11.20"
+genpdf = "0.2.0"
+base64 = "0.21.4" 
 
 # Tauri Plugins
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
@@ -32,7 +34,6 @@ tauri-plugin-printing-ext = { git = "https://github.com/michaelaboah/tauri-plugi
 
 
 [dev-dependencies]
-genpdf = "0.2.0"
 printpdf = "0.6.0"
 tokio = { version = "1.29.1", features = ["full"] }
 # tauri-plugin-window = "2.0.0-alpha.1"

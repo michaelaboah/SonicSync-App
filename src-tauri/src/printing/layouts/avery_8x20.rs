@@ -1,15 +1,13 @@
-use std::fs;
-
 use genpdf::elements::{FrameCellDecorator, PaddedElement, Paragraph, Text};
 use genpdf::style::{Style, StyledString};
 use genpdf::*;
-
+use std::{fs, io};
 #[derive(Default)]
-struct AveryLabelPage {
+struct AveryLabelLayout {
     page: usize,
 }
 
-impl PageDecorator for AveryLabelPage {
+impl PageDecorator for AveryLabelLayout {
     fn decorate_page<'a>(
         &mut self,
         context: &Context,
@@ -143,86 +141,99 @@ impl Element for AveryLabel {
     }
 }
 
+pub struct AveryLabelPage {
+    labels: Vec<String>,
+    document: Document,
+}
+
+impl AveryLabelPage {
+    pub fn new(labels: Vec<String>) -> Self {
+        let font_family = fonts::from_files("assets/fonts/Roboto", "Roboto", None).unwrap();
+        let mut doc = Document::new(font_family);
+        Self {
+            labels,
+            document: doc,
+        }
+    }
+
+    fn render(&mut self) {
+        self.document.set_paper_size(PaperSize::Letter);
+        self.document.set_title("Labels");
+        let decorator = AveryLabelLayout::default();
+
+        self.document.set_page_decorator(decorator);
+
+        let mut table = elements::TableLayout::new(vec![1, 1, 1, 1]);
+
+        table.set_cell_decorator(FrameCellDecorator::new(false, false, false));
+
+        'main_loop: for rows in self.labels.chunks(4) {
+            dbg!(rows);
+            let mut curr_index = 1;
+            let mut row = table.row();
+            'label_loop: for label in rows {
+                if curr_index == 1 {
+                    row.push_element(PaddedElement::new(
+                        AveryLabel::new(label),
+                        Margins::default(),
+                    ));
+                    curr_index += 1;
+                    continue 'label_loop;
+                }
+
+                if curr_index == 2 {
+                    row.push_element(PaddedElement::new(
+                        AveryLabel::new(label),
+                        Margins::trbl(0.0, 0.0, 0.0, 2.0),
+                    ));
+                    curr_index += 1;
+                    continue 'label_loop;
+                }
+
+                if curr_index == 3 {
+                    row.push_element(PaddedElement::new(
+                        AveryLabel::new(label),
+                        Margins::trbl(0.0, 0.0, 0.0, 4.0),
+                    ));
+                    curr_index += 1;
+
+                    continue 'label_loop;
+                }
+
+                if curr_index == 4 {
+                    row.push_element(PaddedElement::new(
+                        AveryLabel::new(label),
+                        Margins::trbl(0.0, 0.0, 0.0, 6.0),
+                    ));
+                    curr_index = 1;
+                    break;
+                }
+                // row = table.row();
+            }
+
+            row.push().unwrap();
+        }
+
+        self.document.push(table);
+    }
+
+    /// This contains a super dumb workaround for getting some bytes in memory.
+    /// Go into the [genpdf] crate and expose a method for getting some damn bytes with a
+    /// [std::io::Cursor<Vec<u8>>]
+    pub fn write_to_bytes(mut self, write_buffer: &mut impl std::io::Write) -> std::io::Result<()> {
+        self.render();
+        self.document.render_to_file("temp.pdf").unwrap();
+
+        let buffer = fs::read("temp.pdf").unwrap();
+        fs::remove_file("temp.pdf").unwrap();
+        let written_bytes = write_buffer.write(&buffer).unwrap();
+        assert_eq!(buffer.len(), written_bytes);
+        Ok(())
+    }
+}
+
 #[test]
 fn example() {
     let font_family = fonts::from_files("assets/fonts/Roboto", "Roboto", None).unwrap();
     let mut doc = Document::new(font_family);
-
-    doc.set_paper_size(PaperSize::Letter);
-    doc.set_title("Labels");
-    let decorator = AveryLabelPage::default();
-
-    doc.set_page_decorator(decorator);
-
-    // let mut table = elements::TableLayout::new(vec![7, 2, 7, 2, 7, 1, 7]);
-    let mut table = elements::TableLayout::new(vec![1, 1, 1, 1]);
-
-    table.set_cell_decorator(FrameCellDecorator::new(false, false, false));
-
-    let titles: Vec<String> = vec![
-        "Guitar".into(),
-        "Oboe".into(),
-        "Violin 1".into(),
-        "Violin 2".into(),
-        "Cello".into(),
-        "Viola 1".into(),
-        "Viola 2".into(),
-        "".into(),
-    ];
-
-    'main_loop: for rows in titles.chunks(4) {
-        dbg!(rows);
-        let mut curr_index = 1;
-        let mut row = table.row();
-        'label_loop: for label in rows {
-            if curr_index == 1 {
-                row.push_element(PaddedElement::new(
-                    AveryLabel::new(label),
-                    Margins::default(),
-                ));
-                curr_index += 1;
-                continue 'label_loop;
-            }
-
-            if curr_index == 2 {
-                row.push_element(PaddedElement::new(
-                    AveryLabel::new(label),
-                    Margins::trbl(0.0, 0.0, 0.0, 2.0),
-                ));
-                curr_index += 1;
-                continue 'label_loop;
-            }
-
-            if curr_index == 3 {
-                row.push_element(PaddedElement::new(
-                    AveryLabel::new(label),
-                    Margins::trbl(0.0, 0.0, 0.0, 4.0),
-                ));
-                curr_index += 1;
-
-                continue 'label_loop;
-            }
-
-            if curr_index == 4 {
-                row.push_element(PaddedElement::new(
-                    AveryLabel::new(label),
-                    Margins::trbl(0.0, 0.0, 0.0, 6.0),
-                ));
-                curr_index = 1;
-                break;
-            }
-            // row = table.row();
-        }
-
-        row.push().unwrap();
-    }
-
-    doc.push(table);
-
-    doc.render_to_file("temp.pdf").unwrap();
-
-    let buffer = fs::read("temp.pdf").unwrap();
-    fs::remove_file("temp.pdf").unwrap();
-
-    dbg!(buffer.len());
 }

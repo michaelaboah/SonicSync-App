@@ -1,15 +1,18 @@
 <script lang="ts">
   import { invoke } from '@tauri-apps/api/tauri'
   import { project } from '$lib/stores/project';
-  // async function greet() {}
-  // onMount(async () => {
-
-  // invoke('fuzzy_by_model', { model: "Q"}).then(x => console.log(x))
+	import { onMount } from 'svelte';
+	import printJS from 'print-js';
+  // import 
  
 
-  // function seeProject() {
-    // console.log($project)
-  // }
+  onMount(async () => {
+
+    let labels = ["Guitar", "Oboe", "Violin 1", "Violin 2"]
+    const base64 = await invoke<string>("print_4x20_labels", { labels } );
+    printJS({printable: base64, type: "pdf", base64: true})
+  })
+
 
 </script>
 

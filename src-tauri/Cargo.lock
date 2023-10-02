@@ -3694,6 +3694,7 @@ dependencies = [
 name = "sonic-sync"
 version = "0.0.3"
 dependencies = [
+ "base64 0.21.4",
  "crossbeam",
  "genpdf",
  "log",

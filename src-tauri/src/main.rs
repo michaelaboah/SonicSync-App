@@ -6,6 +6,7 @@ use tauri::Manager;
 // use tauri_plugin_log::LogTarget;
 mod database;
 mod menus;
+mod printing;
 fn main() {
     std::env::set_var("CG_PDF_VERBOSE", "true");
     let ctx = tauri::generate_context!();
@@ -45,6 +46,7 @@ fn main() {
             database::update_by_model,
             database::find_many_by_model,
             menus::events::save,
+            printing::commands::print_4x20_labels,
         ]);
 
     build

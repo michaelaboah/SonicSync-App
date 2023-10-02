@@ -39,21 +39,26 @@
 {#if navigator.userAgent.includes("Mac")}  
   <button class="btn variant-ringed-primary" on:click={() => macosPrint(target)}>Cus</button>
 {:else}
-  <button class="btn variant-ringed-primary" on:click={() => print = true}>Cus</button>
+  <button class="btn variant-ringed-primary" on:click={() => print = true}>Cus</button
 {/if}
 
 <PrintPdf bind:print={print}>
-    <div class="mx-auto px-auto w-[8.5in]  bg-white" bind:this={target}>
+    <div class="mx-auto px-auto w-[8.5in] bg-white h-[10in]" bind:this={target}>
       {#each pages as pageLabels, pageIndex}
         <!-- Page -->
-        <div class="grid grid-cols-4 gap-x-[0.4in] my-[0.5in] mx-[0.3in] h-[10in]">
-          {#each pageLabels as label, i (i)}
-            <CableLable {label}/>
-          {/each}
+        <div class="">
+          <div class="grid grid-cols-4 gap-x-[0.4in] my-[0.5in] mx-[0.3in]">
+
+            {#each pageLabels as label, i (i)}
+              <CableLable {label}/>
+            {/each}
+
+          </div>
+
+          {#if pageIndex < pages.length - 1}
+            <div style="page-break-after: always;" class="my-[1in]"></div>
+          {/if}
         </div>
-        {#if pageIndex < pages.length - 1}
-          <div style="page-break-after: always;" class="my-[1in]"></div>
-        {/if}
       {/each}
     </div>
 </PrintPdf>

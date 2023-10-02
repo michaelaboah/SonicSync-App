@@ -68,6 +68,11 @@
         "resizable": true,
         "title": "Sonic Sync",
         "width": 800
+      },
+      {
+        "label": "Print",
+        "title": "Print",
+        "url": "webkit-pdfjs-viewer://pdfjs"
       }
     ]
   }
