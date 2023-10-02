@@ -3,6 +3,11 @@
   import { cableList } from "$lib/stores/equipment"
 	import type { Cable } from "$lib/@types/equipment";
   import { default as CableComponent }  from "./Cable.svelte"
+	import { printDialog } from "tauri-plugin-printing-ext-api";
+	import { invoke } from "@tauri-apps/api/tauri";
+
+  import PrintIcon from "~icons/material-symbols/print-outline"
+
 
   function addEmptyCable(id: number) {
     let emptyCable = {
@@ -19,8 +24,16 @@
     $cableList = [...$cableList, emptyCable]
   }
 
-  
 
+  async function macosPrint() {
+    let printLabels: string[] = $cableList.map((x) => {
+      return x.name
+    });
+
+    const base64 = await invoke<string>("print_4x20_labels", { labels: printLabels } );
+      printDialog(base64);
+  }
+  
   function deleteCable(cableToDelete: any ) {
     $cableList = $cableList.filter((i) => i !== cableToDelete);
   }
@@ -30,8 +43,10 @@
   <AppBar class="variant-ringed-surface py-2 rounded mt-1" slotTrail="w-full">
     <svelte:fragment slot="lead">
       <button type="button" class="btn btn-sm variant-filled-primary" on:click={() => addEmptyCable($cableList.length)}>Add</button>
+      <button type="button" class="btn btn-sm variant-filled-secondary" on:click={macosPrint}><span><PrintIcon/></span></button>
     </svelte:fragment>
     <svelte:fragment slot="trail">
+
       <button type="button" class="btn btn-sm variant-filled-error" on:click={() => $cableList = $cableList.filter(() => false)}>Remove All</button>
     </svelte:fragment>
   </AppBar >

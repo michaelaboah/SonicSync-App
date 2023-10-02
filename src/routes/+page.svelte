@@ -1,18 +1,7 @@
 <script lang="ts">
-  import { invoke } from '@tauri-apps/api/tauri'
   import { project } from '$lib/stores/project';
 	import { onMount } from 'svelte';
-	import printJS from 'print-js';
-  // import 
  
-
-  onMount(async () => {
-
-    let labels = ["Guitar", "Oboe", "Violin 1", "Violin 2"]
-    const base64 = await invoke<string>("print_4x20_labels", { labels } );
-    printJS({printable: base64, type: "pdf", base64: true})
-  })
-
 
 </script>
 

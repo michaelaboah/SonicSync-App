@@ -4,29 +4,19 @@
 	import { cableList } from "$lib/stores/equipment";
 	import CableLable from "$lib/components/print/CableLable.svelte";
   import { printDialog } from "tauri-plugin-printing-ext-api" 
+  import { invoke } from "@tauri-apps/api/tauri";
   let labels = $cableList.map((x) => {
     return {name: x.name}
   });
+
+  
 
   let print = false;
   
 
   let target: HTMLElement
 
-  function macosPrint(target: HTMLElement) {
-    const doc = new jsPDF({ orientation: "p", unit: "px", format: "letter", hotfixes: ["px_scaling"] });
-
-      doc.html(target, {
-
-        callback: (doc) => {
-          let base64 = doc.output("datauristring").split(",")[1]
-          // console.log("how often does this run?")
-          printDialog(base64);
-        },
-
-      })
-  }
-
+ 
   let pages: any[][] = [];
   for (let i = 0; i < labels.length; i += 80) {
     pages.push(labels.slice(i, i + 80));
@@ -37,9 +27,9 @@
 
 
 {#if navigator.userAgent.includes("Mac")}  
-  <button class="btn variant-ringed-primary" on:click={() => macosPrint(target)}>Cus</button>
+  <!-- <button class="btn variant-ringed-primary" on:click={() => macosPrint(target)}>Cus</button> -->
 {:else}
-  <button class="btn variant-ringed-primary" on:click={() => print = true}>Cus</button
+  <button class="btn variant-ringed-primary" on:click={() => print = true}>Cus</button>
 {/if}
 
 <PrintPdf bind:print={print}>
