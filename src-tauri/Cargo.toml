@@ -31,6 +31,7 @@ tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", br
 tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-persisted-scope = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-printing-ext = { git = "https://github.com/michaelaboah/tauri-plugin-printing-ext" }
+rayon = "1.8.0"
 
 
 [dev-dependencies]
