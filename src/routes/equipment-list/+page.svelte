@@ -3,8 +3,8 @@
   import { gearList } from "$lib/stores/equipment";
   import Item from "./Item.svelte";
 
-  $: categories = $gearList.reduce((acc, item) => {
-    (acc[item.equipment.category] = acc[item.equipment.category] || []).push(item);
+  $: categories = $gearList.reduce((acc, item, index) => {
+    (acc[item.equipment.category] = acc[item.equipment.category] || []).push(index);
     return acc;
   }, {});
 
@@ -16,11 +16,12 @@
   function addEmptyGear(gearId: number) { 
     let empty = {
       equipment: { id: gearId, category: "", model: "", manufactuer: "", cost: 0, wattage: 0.0, details: {} },  
-      items: [{id: 0, description: "", quantity: 0}]
+      items: [{id: 0, description: "", quantity: 1}]
     };
 
     $gearList = [...$gearList, empty];
   }
+
 </script>
 
 <section class="p-2">
@@ -36,12 +37,12 @@
 
 
 
-  {#each Object.entries(categories) as [category, items]}
+  {#each Object.entries(categories) as [category, indicies]}
     <div class="variant-ghost-surface px-2 p-1 my-1 rounded">
-      <h2 class="font-bold text-primary-400">{category !== "" ? category.toUpperCase() : "EMPTY"}</h2>
+        <h2 class="font-bold text-primary-400">{category !== "" ? category.toUpperCase() : "EMPTY"}</h2>
       <ul class="list-disc list-inside">
-        {#each items as item (item.equipment.id)}
-          <Item gear={item}  on:delete={(e) => deleteItem(e.detail)}/>
+        {#each indicies as i (i)}
+          <Item bind:gear={$gearList[i]}  on:delete={(e) => deleteItem(e.detail)}/>
         {/each}
       </ul>
     </div>
