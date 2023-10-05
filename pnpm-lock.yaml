@@ -23,6 +23,12 @@ dependencies:
   print-js:
     specifier: ^1.6.0
     version: 1.6.0
+  svelte-awesome-color-picker:
+    specifier: ^2.4.7
+    version: 2.4.7
+  svelte-color-select:
+    specifier: ^0.0.12
+    version: 0.0.12(svelte@4.2.1)
   svelte-printpdf:
     specifier: 1.0.2-metadata
     version: 1.0.2-metadata
@@ -1836,6 +1842,10 @@ packages:
     resolution: {integrity: sha512-DBpRoJGKJZn7RY92dPrgoMew8xCWc2P71beqsjyhEI/Ds9mOyVmBwtekyfhpwFIVt1WrxTonFifiOZ62V8CnNA==}
     dev: true
 
+  /@types/culori@2.0.1:
+    resolution: {integrity: sha512-Mfcyo2pT3IwxIdB2fRZrMp+noSZOOc+719G89h/MqDHcJNEDy22HO0XEso7Ofz6p0kB7XqkhxMBjmCXLQPeyJA==}
+    dev: false
+
   /@types/estree@1.0.2:
     resolution: {integrity: sha512-VeiPZ9MMwXjO32/Xu7+OwflfmeoRwkE/qzndw42gGtgJwZopBnzy2gD//NN1+go1mADzkDcqf/KnFRSjTJ8xJA==}
 
@@ -2389,6 +2399,10 @@ packages:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
     dev: true
 
+  /colord@2.9.3:
+    resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
+    dev: false
+
   /colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
     dev: true
@@ -2486,6 +2500,11 @@ packages:
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
     dev: true
+
+  /culori@3.2.0:
+    resolution: {integrity: sha512-HIEbTSP7vs1mPq/2P9In6QyFE0Tkpevh0k9a+FkjhD+cwsYm9WRSbn4uMdW9O0yXlNYC3ppxL3gWWPOcvEl57w==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: false
 
   /dataloader@2.2.2:
     resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
@@ -4333,6 +4352,12 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /svelte-awesome-color-picker@2.4.7:
+    resolution: {integrity: sha512-LW9n16pR3V9vxFXdq0rmtBYJXv57zBZmLV/KNPtFqTo0kYwu7NsQhZZxFv6qoB/5PUXyPMfe3VCllyauFEY3SQ==}
+    dependencies:
+      colord: 2.9.3
+    dev: false
+
   /svelte-check@3.5.2(@babel/core@7.23.0)(postcss-load-config@4.0.1)(postcss@8.4.30)(svelte@4.2.1):
     resolution: {integrity: sha512-5a/YWbiH4c+AqAUP+0VneiV5bP8YOk9JL3jwvN+k2PEPLgpu85bjQc5eE67+eIZBBwUEJzmO3I92OqKcqbp3fw==}
     hasBin: true
@@ -4359,6 +4384,16 @@ packages:
       - stylus
       - sugarss
     dev: true
+
+  /svelte-color-select@0.0.12(svelte@4.2.1):
+    resolution: {integrity: sha512-MhT5cGrI8NkNB+3vZED/W75Jb0aMGFvOJUhdJ+tpqhKBjevRdpr+jMpjL7hWODU+sQLp0lZ3sL4g0c111fvPIg==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0
+    dependencies:
+      '@types/culori': 2.0.1
+      culori: 3.2.0
+      svelte: 4.2.1
+    dev: false
 
   /svelte-command-palette@1.2.1(svelte@4.2.1)(typescript@5.2.2):
     resolution: {integrity: sha512-QQPBacePJSGCqxJrMeRwVJ4hdF48YP0fbDFjlw6BhdvyptsMX0vgYL/66S/Owsdvd1dRbvi/bUrOZzg3OwLONg==}

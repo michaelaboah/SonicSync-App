@@ -29,8 +29,6 @@ pub fn generate_menu_bar(app_name: &str) -> Menu {
                 MenuItem::Separator.into(),
                 MenuItem::Quit.into(),
             ])
-            .add_submenu(database_submenu)
-            .add_item(print)
             .add_item(open_preferences),
         )),
         #[cfg(target_os = "macos")]
@@ -41,18 +39,21 @@ pub fn generate_menu_bar(app_name: &str) -> Menu {
                 .add_item(save)
                 .add_item(load)
                 .add_item(save_as)
-                .add_item(open),
+                .add_item(open)
+                .add_native_item(MenuItem::Separator.into())
+                .add_item(print)
+                .add_submenu(database_submenu),
         )),
         #[cfg(not(target_os = "macos"))]
         MenuEntry::Submenu(Submenu::new(
             "File",
-            Menu::with_items([MenuItem::CloseWindow.into()])
+            Menu::new()
                 .add_item(new)
                 .add_item(save)
                 .add_item(save_as)
                 .add_item(load)
                 .add_item(open)
-                .add_submenu(database_submenu)
+                .add_native_item(MenuItem::Separator.into())
                 .add_item(open_preferences),
         )),
         MenuEntry::Submenu(Submenu::new(
@@ -63,6 +64,7 @@ pub fn generate_menu_bar(app_name: &str) -> Menu {
             "Window",
             Menu::with_items([MenuItem::Minimize.into(), MenuItem::Zoom.into()]),
         )),
+        MenuEntry::Submenu(database_submenu),
         MenuEntry::Submenu(Submenu::new(
             "Help",
             Menu::with_items([CustomMenuItem::new("Learn More", "Learn More").into()]),

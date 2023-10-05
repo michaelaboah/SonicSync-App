@@ -32,17 +32,30 @@ export type Equip = {
 }
 
 
-export type Cable = {
-  id: number,
+type CableData = {
   name: string,
   description: string,
-  // in reference to the bundle name
-  bundle: string | null, 
-  cableKind: "Power" | "Analog" | "Digital"
   model: string,
   length: number,
-  source: Connection | null,
-  destination: Connection | null , // Same as Source
+  destinationName: string | null,
+  connectionName: string | null,
+  cableKind: "Power" | "Analog" | "Digital"
+  bundleName: string | null, 
+}
+
+type CableMeta = {
+  textColor: 'black' | "white"
+  color: {r: number, g: number, b: number },
+  alignment: "Left" | "Right" | "Center" 
+}
+
+export type Cable = {
+  id: number,
+  data: CableData,
+  metadata: CableMeta,
+  source: Connection,
+  destination: Connection , // Same as Source
+  bundle: Bundle
 }
 
 

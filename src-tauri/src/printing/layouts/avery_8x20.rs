@@ -1,4 +1,4 @@
-use genpdf::elements::{FrameCellDecorator, PaddedElement};
+use genpdf::elements::{FrameCellDecorator, PaddedElement, PageBreak};
 use genpdf::fonts::FontCache;
 use genpdf::style::{Color, Style};
 use genpdf::*;
@@ -15,7 +15,7 @@ impl PageDecorator for AveryLabelLayout {
         mut area: render::Area<'a>,
         style: style::Style,
     ) -> Result<render::Area<'a>, error::Error> {
-        self.page += 1;
+        self.page = 2;
 
         area.add_margins(Margins::trbl(6.5 * 2.0, 6.5, 6.5 * 2.0, 6.9));
 
@@ -108,10 +108,14 @@ impl Element for AveryLabel {
             ..
         } = self.label.data.clone();
 
-        let LabelMeta { alignment, color } = &self.label.metadata;
+        let LabelMeta {
+            alignment,
+            color,
+            text_color,
+        } = self.label.metadata.take().unwrap_or_default();
 
         // Top bar
-        let top_bar = Style::new().with_color(Color::Rgb(color.0, color.1, color.2));
+        let top_bar = Style::new().with_color(Color::Rgb(color.r, color.g, color.b));
         for i in 0..=15 {
             let points = vec![
                 Position::new(0.0, i as f64 / COEFFICIENT),
@@ -120,14 +124,20 @@ impl Element for AveryLabel {
             area.draw_line(points, top_bar);
         }
 
+        let mut title_style = style.with_color(Color::Rgb(0, 0, 0)); // Black default
+        if text_color == "white" {
+            title_style.set_color(Color::Rgb(255, 255, 255)); // White
+        }
+
         // Title
         self.print_text_section(
             &mut area,
             Position::new(0.0, -1.5),
-            style.with_color(Color::Rgb(255, 255, 255)),
+            title_style,
             &name,
             font_cache,
-        );
+        )
+        .unwrap();
 
         style.set_color(Color::Rgb(0, 0, 0));
         style.set_font_size(8);
@@ -135,20 +145,22 @@ impl Element for AveryLabel {
         // "t2" text
         self.print_text_section(
             &mut area,
-            Position::new(0.0, 2.0),
+            Position::new(0.0, 3.0),
             style,
             &description,
             font_cache,
-        );
+        )
+        .unwrap();
 
         // "b2" text
         self.print_text_section(
             &mut area,
-            Position::new(0.0, 4.0),
+            Position::new(0.0, 6.0),
             style,
             &destination_name,
             font_cache,
-        );
+        )
+        .unwrap();
 
         // Gray bottom divider
         let bottom_divider = Style::new().with_color(Color::Rgb(200, 200, 200));
@@ -160,20 +172,22 @@ impl Element for AveryLabel {
 
         self.print_text_section(
             &mut bottom_zones[0],
-            Position::new(0.0, 4.0),
+            Position::new(0.0, 9.0),
             style,
             &bundle.unwrap_or("".into()),
             font_cache,
-        );
+        )
+        .unwrap();
 
         // Bottom right text // Cable Termination Zone
         self.print_text_section(
             &mut bottom_zones[1],
-            Position::new(0.0, 4.0),
+            Position::new(0.0, 9.0),
             style,
             &format!("XLR, {}' Male", length),
             font_cache,
-        );
+        )
+        .unwrap();
 
         result.size = area.size();
 
@@ -185,11 +199,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct CableLabel {
-    metadata: LabelMeta,
+    metadata: Option<LabelMeta>,
     data: CableData,
 }
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CableData {
     name: String,
     description: String,
@@ -210,26 +225,32 @@ pub enum LabelAlignment {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LabelMeta {
+    text_color: String,
     alignment: LabelAlignment,
-    color: (u8, u8, u8),
+    color: LabelColor,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct LabelColor {
+    r: u8,
+    g: u8,
+    b: u8,
 }
 
 impl Default for LabelMeta {
     fn default() -> Self {
         Self {
-            color: (255, 255, 255),
+            color: LabelColor {
+                r: 255,
+                g: 255,
+                b: 255,
+            },
             alignment: Default::default(),
+            text_color: Default::default(),
         }
     }
-}
-
-enum PossibleLabels {
-    CableLabel {
-        metadata: LabelMeta,
-        data: CableData,
-    },
-    EmptyLabel,
 }
 
 pub struct AveryLabelPage {
@@ -250,44 +271,37 @@ impl AveryLabelPage {
     fn render(&mut self) {
         self.document.set_paper_size(PaperSize::Letter);
         self.document.set_title("Labels");
-
         let decorator = AveryLabelLayout::default();
 
         self.document.set_page_decorator(decorator);
 
-        let mut table = elements::TableLayout::new(vec![1, 1, 1, 1]);
+        for page_chunk in self.labels.chunks(80) {
+            let mut table = elements::TableLayout::new(vec![1, 1, 1, 1]);
+            table.set_cell_decorator(FrameCellDecorator::new(false, false, false));
 
-        table.set_cell_decorator(FrameCellDecorator::new(false, false, false));
+            for rows in page_chunk.chunks(4) {
+                let mut row = table.row();
+                for (i, label) in rows.iter().enumerate() {
+                    let margin = match i {
+                        0 => 0.0,
+                        1 => 2.0,
+                        2 => 4.0,
+                        _ => 6.0,
+                    };
+                    row.push_element(create_padded_element(
+                        AveryLabel::new(label.clone()),
+                        margin,
+                    ));
+                }
 
-        for rows in self.labels.chunks(4) {
-            let mut row = table.row();
-            for (i, label) in rows.iter().enumerate() {
-                let margin = match i {
-                    0 => 0.0,
-                    1 => 2.0,
-                    2 => 4.0,
-                    _ => 6.0,
-                };
-                row.push_element(create_padded_element(
-                    AveryLabel::new(CableLabel::default()),
-                    margin,
-                ));
+                for _ in 0..(4 - rows.len()) {
+                    row.push_element(AveryEmptyLabel::default());
+                }
+                row.push().unwrap();
             }
 
-            let rem = 4 - rows.len();
-
-            for _ in 0..rem {
-                row.push_element(AveryEmptyLabel::default());
-            }
-
-            row.push().unwrap();
+            self.document.push(table);
         }
-
-        fn create_padded_element<E: genpdf::Element>(label: E, margin: f32) -> PaddedElement<E> {
-            PaddedElement::new(label, Margins::trbl(0.0, 0.0, 0.0, margin))
-        }
-
-        self.document.push(table);
     }
 
     /// This contains a super dumb workaround for getting some bytes in memory.
@@ -309,4 +323,8 @@ impl AveryLabelPage {
         self.document.render_to_file(path).unwrap();
         Ok(())
     }
+}
+
+fn create_padded_element<E: genpdf::Element>(label: E, margin: f32) -> PaddedElement<E> {
+    PaddedElement::new(label, Margins::trbl(0.0, 0.0, 0.0, margin))
 }
