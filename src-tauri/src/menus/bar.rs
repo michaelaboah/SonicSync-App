@@ -41,8 +41,7 @@ pub fn generate_menu_bar(app_name: &str) -> Menu {
                 .add_item(save_as)
                 .add_item(open)
                 .add_native_item(MenuItem::Separator.into())
-                .add_item(print)
-                .add_submenu(database_submenu),
+                .add_item(print),
         )),
         #[cfg(not(target_os = "macos"))]
         MenuEntry::Submenu(Submenu::new(
