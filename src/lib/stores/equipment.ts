@@ -16,13 +16,13 @@ export const cableList = writable<Cable[]>([
       destinationName: ""
     },
     metadata: {
-      textColor: 'black',
+      textColor: 'white',
       color: {r: 0, g: 0, b: 255},
       alignment: "Left"
     },
     source: { name: "", kind: Analog.XlrDigital },
     destination: { name: "", kind: Analog.XlrDigital },
-    bundle: { name: "", cableIds: new Set("")},
+    bundle: { name: "", cableIds: []},
   }
 ]);
 

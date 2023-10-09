@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 pub struct Item {
     pub created_at: String,
     pub updated_at: String,
-    pub cost: u64,
     pub model: String,
     pub manufacturer: String,
     pub weight: f64,

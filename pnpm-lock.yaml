@@ -17,6 +17,9 @@ dependencies:
   '@urql/svelte':
     specifier: ^4.0.4
     version: 4.0.4(graphql@16.8.1)(svelte@4.2.1)
+  generator-sort:
+    specifier: ^1.0.0
+    version: 1.0.0
   jspdf:
     specifier: ^2.5.1
     version: 2.5.1
@@ -29,6 +32,12 @@ dependencies:
   svelte-color-select:
     specifier: ^0.0.12
     version: 0.0.12(svelte@4.2.1)
+  svelte-infinite-scroll:
+    specifier: ^2.0.1
+    version: 2.0.1
+  svelte-inview:
+    specifier: ^4.0.1
+    version: 4.0.1(svelte@4.2.1)
   svelte-printpdf:
     specifier: 1.0.2-metadata
     version: 1.0.2-metadata
@@ -37,7 +46,7 @@ dependencies:
     version: 8.1.0(svelte@4.2.1)
   tauri-plugin-log-api:
     specifier: github:tauri-apps/tauri-plugin-log#v1
-    version: github.com/tauri-apps/tauri-plugin-log/f7142fcf10841cdabab2fbe8650e9adc3f0bb212
+    version: github.com/tauri-apps/tauri-plugin-log/1a369766cf90f3aed9c2b7c68b70bf39081538b3
   tauri-plugin-printing-ext-api:
     specifier: 0.0.4
     version: 0.0.4
@@ -2822,6 +2831,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /generator-sort@1.0.0:
+    resolution: {integrity: sha512-xzVvVuMrRvINjet6x7Hlv4fbupUBuswkefe62YRejY1olzpdRNdTX655jw30ELgm5UJOMzZRoPlmVXVS0GFADQ==}
+    dev: false
+
   /gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
@@ -4418,6 +4431,18 @@ packages:
       svelte: 4.2.1
     dev: true
 
+  /svelte-infinite-scroll@2.0.1:
+    resolution: {integrity: sha512-goTHCfOHRDCs8C5MeSuIc6LlAQ8zVQ+M4Y3LyvrDjx5rqSSxSrdCuQwIyWYNcO6j6/mnqRro3QB64ClBzfn+Wg==}
+    dev: false
+
+  /svelte-inview@4.0.1(svelte@4.2.1):
+    resolution: {integrity: sha512-8NuT/DKFiZAccDw1Z16cIsdZ7K6/BGxrUfDaFaWTCEdn3YqMj1TUAkfmQ08FQ1+INl1G+TQS+ImXIBiiISgXog==}
+    peerDependencies:
+      svelte: ^3.0.0 || ^4.0.0
+    dependencies:
+      svelte: 4.2.1
+    dev: false
+
   /svelte-preprocess@5.0.4(@babel/core@7.23.0)(postcss-load-config@4.0.1)(postcss@8.4.30)(svelte@4.2.1)(typescript@5.2.2):
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
     engines: {node: '>= 14.10.0'}
@@ -5012,8 +5037,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/tauri-apps/tauri-plugin-log/f7142fcf10841cdabab2fbe8650e9adc3f0bb212:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/f7142fcf10841cdabab2fbe8650e9adc3f0bb212}
+  github.com/tauri-apps/tauri-plugin-log/1a369766cf90f3aed9c2b7c68b70bf39081538b3:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/1a369766cf90f3aed9c2b7c68b70bf39081538b3}
     name: tauri-plugin-log-api
     version: 0.0.0
     dependencies:

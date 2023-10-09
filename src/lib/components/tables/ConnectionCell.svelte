@@ -50,7 +50,7 @@
 </script>
   <td class={cellClass + " w-1/5"}>
 
-    <div class="flex flex-row h-7">
+    <div class="flex flex-row h-7 space-x-1">
 
       <input
         class="input w-full autocomplete text-xs"
@@ -65,21 +65,21 @@
           <Autocomplete bind:input={connection.name} bind:options={possibleEquips} on:selection={onConnSelection} />
       </div>
      
-      {#if connection.kind }
+      <!-- {#if connection.kind } -->
       
-        <select class="select w-full text-sm pl-1 p-0" name="Choose" bind:value={connection.kind}>
+        <select class="select w-full text-sm pl-1 p-0" placeholder="Select Termination" name="Choose" bind:value={connection.kind}>
           {#each variants as v }
-            <option value={v}>{v}</option> 
+            <option class="bg-surface-50" value={v}>{v}</option> 
           {/each} 
         </select>
 
-      {:else}
-
-        <select class="select w-full text-sm pl-1 p-0" name="Choose">
-            <option>Empty</option> 
-        </select>
-
-      {/if}
+      <!-- {:else} -->
+      <!---->
+      <!--   <select class="select w-full text-sm pl-1 p-0" placeholder="Select Type" name="Choose"> -->
+      <!--       <option>Empty</option>  -->
+      <!--   </select> -->
+      <!---->
+      <!-- {/if} -->
       <div class="flex flex-row">
 
         <!-- <button class="btn btn-icon p-0 m-0 h-7 w-fit" on:click={() => connection = null}><span><CloseIcon/></span></button> -->

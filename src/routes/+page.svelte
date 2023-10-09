@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { cableList } from "$lib/stores/equipment";
   import { project } from '$lib/stores/project';
 	import { onMount } from 'svelte';
  
@@ -11,4 +12,5 @@
   <h1 class="h3 font-bold">This page serves no purpose</h1>  
   <span class="h3">Tip:</span><h1 class="h3 italic"> Hit <kbd>Ctrl</kbd> + <kbd>k</kbd> For a quick menu</h1>  
   </div>
+
 </div>

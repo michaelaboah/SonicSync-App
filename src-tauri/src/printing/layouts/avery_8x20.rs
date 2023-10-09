@@ -100,7 +100,7 @@ impl Element for AveryLabel {
         let CableData {
             name,
             description,
-            bundle,
+            bundleName: bundle,
             // model,
             length,
             destination_name,
@@ -209,7 +209,7 @@ pub struct CableData {
     name: String,
     description: String,
     cable_kind: String,
-    bundle: Option<String>,
+    bundleName: Option<String>,
     model: String,
     length: f64,
     destination_name: String,

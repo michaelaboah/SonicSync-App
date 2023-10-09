@@ -16,13 +16,13 @@ pub fn print_4x20_labels(labels: Vec<serde_json::Value>) -> String {
 
     let page = AveryLabelPage::new(formatted);
 
-    page.write_to_file("test_pdf.pdf");
+    // page.write_to_file("test_pdf.pdf");
 
-    // let mut buffer = Cursor::new(vec![]);
-    // page.write_to_bytes(&mut buffer).unwrap();
+    let mut buffer = Cursor::new(vec![]);
+    page.write_to_bytes(&mut buffer).unwrap();
 
-    // dbg!(general_purpose::STANDARD.encode(buffer.into_inner()))
-    format!("")
+    general_purpose::STANDARD.encode(buffer.into_inner())
+    // format!("")
 }
 
 #[test]

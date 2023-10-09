@@ -22,7 +22,7 @@ pub fn start_db(app_data_dir: &mut std::path::PathBuf) -> Database {
     }
 
     let mut db = Database::open_file(db_path).unwrap();
-    setup_indicies(&mut db);
+    // setup_indicies(&mut db);
 
     db
 }
@@ -37,10 +37,8 @@ pub fn setup_indicies(db: &mut Database) {
             },
             options: Some(polodb_core::IndexOptions {
                 unique: Some(true),
-                ..Default::default()
+                name: Some("model".to_string()),
             }),
         })
         .unwrap();
-
-    dbg!(items_inv.name());
 }
