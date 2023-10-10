@@ -1,15 +1,8 @@
 <script lang="ts">
-  import { invoke } from '@tauri-apps/api/tauri'
+  import { cableList } from "$lib/stores/equipment";
   import { project } from '$lib/stores/project';
-  // async function greet() {}
-  // onMount(async () => {
-
-  // invoke('fuzzy_by_model', { model: "Q"}).then(x => console.log(x))
-  
-
-  // function seeProject() {
-    // console.log($project)
-  // }
+	import { onMount } from 'svelte';
+ 
 
 </script>
 
@@ -19,4 +12,5 @@
   <h1 class="h3 font-bold">This page serves no purpose</h1>  
   <span class="h3">Tip:</span><h1 class="h3 italic"> Hit <kbd>Ctrl</kbd> + <kbd>k</kbd> For a quick menu</h1>  
   </div>
+
 </div>

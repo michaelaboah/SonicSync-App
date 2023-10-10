@@ -3,17 +3,18 @@ use tauri::{api::dialog, api::dialog::blocking, Manager};
 pub fn menu_event_handler(event: tauri::WindowMenuEvent) {
     match event.menu_item_id() {
         "new" => new_project(event),
-        "save" => unimplemented!(),
+        "save" => event.window().emit("save", None::<u8>).unwrap(),
         "save_as" => save_project("save", event),
         // "open" => unimplemented!(), // create a new window
+        // "print_all" => print_all(), // create a new window
         "load_project" => load_project("load-project", event),
-        "palette" => unimplemented!(),
-        "preferences" => unimplemented!(),
+        // "palette" => unimplemented!(),
+        // "preferences" => unimplemented!(),
         "Learn More" => {
             let _url = "to be implemented".to_string();
         }
-        _ => unimplemented!(),
-    }
+        _ => (),
+    };
 }
 
 fn new_project(event: tauri::WindowMenuEvent) {

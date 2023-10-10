@@ -16,16 +16,20 @@ pub fn database_insert(
     session.start_transaction(None).unwrap();
     let inv = db.collection("items");
 
-    let dup = inv
-        .insert_one_with_session(item, &mut session)
-        .is_err_and(|e| dbg!(matches!(e, Error::DuplicateKey(..))));
-
-    if dup {
+    if inv
+        .find_one_with_session(doc! { "model": &item.model }, &mut session)
+        .unwrap()
+        .is_some()
+    {
         println!("Duplicated Key Found");
         return Some(json!({"error": "duplicate"}));
     }
 
+    inv.insert_one_with_session(item, &mut session)
+        .expect("Upheld uniquness");
+
     session.commit_transaction().unwrap();
+
     None
 }
 
@@ -92,6 +96,11 @@ pub fn update_by_model(
 
     dbg!(deleted_result);
 
+    assert!(inv
+        .find_one_with_session(doc! { "model": &item.model }, &mut session)
+        .unwrap()
+        .is_some());
+
     let dup = inv
         .insert_one_with_session(item, &mut session)
         .is_err_and(|e| dbg!(matches!(e, Error::DuplicateKey(..))));
@@ -117,10 +126,14 @@ pub fn delete_all(db: tauri::State<Database>) {
 
 #[command]
 pub fn delete_by_model(db: tauri::State<Database>, model: String) {
+    let mut session = db.start_session().unwrap();
+    session.start_transaction(None).unwrap();
+
     let inv: Collection<models::Item> = db.collection("items");
 
-    let deleted_result = inv.delete_one(doc! {"model": model}).unwrap();
-    dbg!(deleted_result);
+    let deleted_result = inv.delete_one_with_session(doc! {"model": model }, &mut session);
+
+    session.commit_transaction().unwrap();
 }
 
 #[command]
@@ -133,8 +146,6 @@ pub fn get_all_items(db: tauri::State<Database>) -> Vec<models::Item> {
     for i in all_items {
         items.push(i.unwrap());
     }
-
-    // dbg!(&items);
 
     items
 }

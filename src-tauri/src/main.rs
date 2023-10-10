@@ -6,13 +6,14 @@ use tauri::Manager;
 // use tauri_plugin_log::LogTarget;
 mod database;
 mod menus;
-
+mod printing;
 fn main() {
+    std::env::set_var("CG_PDF_VERBOSE", "true");
     let ctx = tauri::generate_context!();
 
     let menu = menus::bar::generate_menu_bar(&ctx.package_info().name);
 
-    tauri::Builder::default()
+    let build = tauri::Builder::default()
         .setup(move |app| {
             let mut app_data_dir = app.path_resolver().app_local_data_dir().expect(
                 "A 'Local App Data Directory' was not found on your system. Cannot run program",
@@ -32,6 +33,7 @@ fn main() {
         // )
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_persisted_scope::init())
+        .plugin(tauri_plugin_printing_ext::init())
         .menu(menu)
         .on_menu_event(menus::events::menu_event_handler)
         .invoke_handler(tauri::generate_handler![
@@ -43,8 +45,11 @@ fn main() {
             database::delete_by_model,
             database::update_by_model,
             database::find_many_by_model,
-            menus::events::save
-        ])
+            menus::events::save,
+            printing::commands::print_4x20_labels,
+        ]);
+
+    build
         .run(ctx)
         .expect("error while running tauri application");
 }

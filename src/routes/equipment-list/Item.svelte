@@ -26,7 +26,8 @@
 
   $: totalWattage = 0
     // totalWattage = gear.items.length * gear.equipment.details.power.wattage
-  $: totalCost = gear.items.length * gear.equipment.cost
+  $: totalCost = gear.items.length * gear.equipment.cost 
+  $: totalQty = gear.items.reduce((curr, acc) => {return curr + acc.quantity}, 0)
   $: updatingModel = gear.equipment.model;
   $: updatingModel, handleModelUpdate() 
 
@@ -137,7 +138,7 @@
     return {    
       id: newId,
       description: "", 
-      quantity: 0,
+      quantity: 1,
       purpose: "",
       publicNotes: "",
       privateNotes: "",
@@ -185,7 +186,7 @@
       <strong class="ml-4 mr-2 whitespace-nowrap">Total Cost:</strong>
       <p class="text-secondary-400">${totalCost}</p>
     </td>
-    <td class="w-fit flex mt-1 flex-row"><strong class="ml-4 mr-2 whitespace-nowrap">Total Qty:</strong><p>{gear.items.length}</p></td>
+    <td class="w-fit flex mt-1 flex-row"><strong class="ml-4 mr-2 whitespace-nowrap">Total Qty:</strong><p>{totalQty}</p></td>
     <td class="w-fit flex mt-1 flex-row"><strong class="ml-4 mr-2 whitespace-nowrap">Total Wattage:</strong><p class=" whitespace-nowrap">{totalWattage} Watts</p></td>
     <td class="w-full grow flex flex-row">
 <!-- Spacer-->
@@ -238,5 +239,6 @@
       {/each}
     </tbody>
   </table>
+    
 </section>
 </ul>

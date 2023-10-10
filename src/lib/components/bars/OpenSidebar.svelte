@@ -43,9 +43,9 @@
       <span><ToolsIcon/></span>
       <span>Production</span>
     </a></li>
-    <li><a class="{classesActive('/labels')}" href="/labels">
+    <li><a class="{classesActive('/paperwork')}" href="/paperwork">
       <span><PapersIcon/></span>
-      <span>Labels</span>
+      <span>Paperwork</span>
     </a></li>
     <li class="fixed bottom-0 my-auto pb-4">
       <hr class="mb-1"/>

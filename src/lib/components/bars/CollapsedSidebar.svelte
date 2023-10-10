@@ -37,7 +37,7 @@
     <li><a class="{classesActive('/production-settings')} mb-2.5" href="/production-settings">
       <span><ToolsIcon/></span>
     </a></li>
-    <li><a class="{classesActive('/labels')} mb-2.5" href="/labels">
+    <li><a class="{classesActive('/paperwork')} mb-2.5" href="/paperwork">
       <span><PapersIcon/></span>
     </a></li>
     <li class="fixed bottom-0 my-auto pb-4">

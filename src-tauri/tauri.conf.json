@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "sonic-sync",
-    "version": "0.0.3"
+    "version": "0.0.4"
   },  
   "tauri": {
     "allowlist": {
@@ -39,6 +39,7 @@
       "identifier": "com.sonic-sync.dev",
       "longDescription": "",
       "macOS": {
+        "minimumSystemVersion": "10.15",
         "entitlements": null,
         "exceptionDomain": "",
         "frameworks": [],

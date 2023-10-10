@@ -4,8 +4,8 @@ export type ProductionInformation = {
     productionName: string
     director: string
     venue: string
-    // showImage?: string 
-    // designerStamp?: string
+    showImage?: string 
+    designerStamp?: string
     notes?: string
 }
 

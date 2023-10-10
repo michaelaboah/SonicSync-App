@@ -31,6 +31,10 @@
       invoke("save", { path, object: $project })
     })
 
+    listen("save-project-fetch", () => {
+      invoke("save", { path: $meta.currentFilePath, object: $project })
+    })
+
   })
 </script>
 
