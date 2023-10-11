@@ -135,20 +135,20 @@
 
   <section class="flex flex-col ">
     <div class="flex-grow">
-      <table class="table w-full">
+      <table class="table w-full table-fixed">
           <thead class=""> 
-              <th class="!p-1 text-center w-1">
+              <th class="!p-1 text-center w-8">
                 <input class="checkbox" type="checkbox" bind:checked={selectAll}/>
               </th>
-              <th class="!p-1 text-center">Name</th>
-              <th class="!p-1 text-center">Description</th>
-              <th class="!p-1 text-center">Model</th>
-              <th class="!p-1 text-center">Type</th>
-              <th class="!p-1 text-center">Length</th>
-              <th class="!p-1 text-center">Bundle</th>
-              <th class="!p-1 text-center">Source</th>
-              <th class="!p-1 text-center">Destination</th>
-              <th class="!p-1 text-center">Actions</th>
+              <th class="!p-1 text-center w-2/12">Name</th>
+              <th class="!p-1 text-center w-2/12">Description</th>
+              <th class="!p-1 text-center w-1/12">Model</th>
+              <th class="!p-1 text-center w-1/12">Type</th>
+              <th class="!p-1 text-center w-1/12">Length</th>
+              <th class="!p-1 text-center w-1/12">Bundle</th>
+              <th class="!p-1 text-center w-2/12">Source</th>
+              <th class="!p-1 text-center w-2/12">Destination</th>
+              <th class="!p-1 text-center w-1/12">Actions</th>
           </thead> 
 
           <tbody class="w-full" >

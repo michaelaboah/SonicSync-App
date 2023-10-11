@@ -208,20 +208,20 @@
     </td>
   </tr>
   </table>
-  <section class="flex mt-0">
-  <table class="table table-hover">
+  <section class=" mt-0">
+  <table class="table table-hover table-fixed">
     <thead>
       <tr>
         <th class="!p-2 !pl-1.5">Description</th>
         <th class="!p-1">Purpose</th>
-        <th class="!p-1">Quantity</th>
-        <th class="!p-1">Actions</th>
+        <th class="!p-1 w-40">Quantity</th>
+        <th class="!p-1 w-40">Actions</th>
       </tr>
     </thead>
     <tbody>
       {#each gear.items as item (item.id) }
         <tr class="h-0">
-          <td contenteditable="true" bind:innerText={item.description} class="@apply !py-0 !pt-1 italic text-opacity-30 border-r border-surface-300 dark:border-surface-500"></td>
+          <td contenteditable="true" bind:innerText={item.description} class="w-32 max-w-80 overflow-clip overflow-wrap break-word @apply !py-0 !pt-1 italic text-opacity-30 border-r border-surface-300 dark:border-surface-500"></td>
           <td contenteditable="true" bind:innerText={item.purpose} class="@apply !py-0 italic text-opacity-30 border-r border-surface-300 dark:border-surface-500"></td>
           <td class="@apply !py-0 !pt-1 italic text-opacity-30  border-r border-surface-300 dark:border-surface-500">
             <input class="input h-fit py-0 w-20 m-0" type="number" bind:value={item.quantity}/>

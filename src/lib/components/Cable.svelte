@@ -23,7 +23,7 @@
 
   let nameHex: string = "#e2e1e5"
 
-  const cellClass = "!p-0.5 !px-4 border-surface-300 dark:border-surface-500"
+  const cellClass = "!p-0.5  border border-surface-300 dark:border-surface-500"
   const dispatch = createEventDispatcher();
   const popupTarget = (Math.random() + 1).toString(36).substring(7);
   const popupSettings: PopupSettings = {
@@ -92,14 +92,14 @@
 
 <tr class="">
 
-  <td class={cellClass}>
+  <td class="!py-0.5 !px-1 border-surface-300 dark:border-surface-500">
     <input class="checkbox" type="checkbox" bind:checked={selected}/>
   </td>
 
   <td class={cellClass} >
 
     <p style="background-color: {hex}; color: {textColor}"
-      class="rounded px-4 py-0.5 w-4/5" 
+      class="rounded px-4 py-0.5 w-full" 
       contenteditable="true"
       bind:textContent={cable.data.name}>
     </p>
@@ -122,7 +122,7 @@
     </select>
   </td>
 
-  <td class={cellClass + " w-28"}>
+  <td class={cellClass}>
 
     <input class="input h-7 py-0 w-full m-0" type="number" bind:value={cable.data.length}/>
 
@@ -176,7 +176,7 @@
       <div class="card w-fit h-fit pt-2" data-popup={popupColorPicker}>
         <!-- {#if colorPickerComponent} -->
         <!--   {#await colorPickerComponent then { default: ColorPicker} } -->
-              <ColorPicker bind:rgb={cable.metadata.color} bind:hex={nameHex} isAlpha={false}  isInput={false} is/> 
+              <ColorPicker bind:rgb={cable.metadata.color} bind:hex={nameHex} isAlpha={false}  isInput={false}/> 
         <!--   {/await}  -->
         <!-- {/if} -->
       </div>

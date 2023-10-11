@@ -44,26 +44,26 @@
 
 
     <div class="mr-4">
-    <table class="table">
+    <table class="table table-fixed">
     
-      <thead>
-        <tr>
-          <th class="text-center">Role</th>
-          <th class="text-center">Name</th>
-          <th class="text-center">Email</th>
-          <th class="text-center">Phone</th>
-          <th class="text-center">Actions</th>
+      <thead class="p-0 m-0 ">
+        <tr >
+          <th class="text-center !py-2">Role</th>
+          <th class="text-center !py-2">Name</th>
+          <th class="text-center !py-2">Email</th>
+          <th class="text-center !py-2">Phone</th>
+          <th class="text-center !py-2 w-32">Actions</th>
         </tr>
       </thead>
 
       <tbody>
         {#each $audioTeam as { role, name, email, phone }, id }
-          <tr>
-            <td class="text font-semibold whitespace-nowrap p-5 border border-surface-300 dark:border-surface-500 max-w-fit" contenteditable bind:innerText={role}></td>
-            <td class="text-sm whitespace-nowrap p-5  border border-surface-300 dark:border-surface-500" contenteditable bind:innerText={name}></td>
-            <td class="text-sm whitespace-nowrap p-5  border border-surface-300 dark:border-surface-500" contenteditable bind:innerText={email}></td>
-            <td class="text-sm whitespace-nowrap p-5  border border-surface-300 dark:border-surface-500" contenteditable bind:innerText={phone}></td>
-            <td class="border border-surface-300 dark:border-surface-500">
+          <tr >
+            <td class="overflow-clip text-ellipsis font-semibold whitespace-nowrap border @apply !py-2 border-surface-300  dark:border-surface-500" contenteditable bind:innerText={role}></td>
+            <td class="overflow-clip text-ellipsis text-sm whitespace-nowrap border border-surface-300 @apply !py-2 dark:border-surface-500" contenteditable bind:innerText={name}></td>
+            <td class="overflow-clip text-ellipsis text-sm whitespace-nowrap border border-surface-300 @apply !py-2 dark:border-surface-500" contenteditable bind:innerText={email}></td>
+            <td class="overflow-clip text-ellipsis text-sm whitespace-nowrap border border-surface-300 @apply !py-2 dark:border-surface-500" contenteditable bind:innerText={phone}></td>
+            <td class="overflow-clip text-ellipsis border border-surface-300 @apply !py-2 dark:border-surface-500">
               <div class="flex justify-end mx-4">
                 <button class="btn btn-sm variant-filled-error" on:click={() => removeRole(id)}><TrashIcon/></button>
               </div>

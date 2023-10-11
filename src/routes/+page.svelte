@@ -2,8 +2,12 @@
   import { cableList } from "$lib/stores/equipment";
   import { project } from '$lib/stores/project';
 	import { onMount } from 'svelte';
- 
+  import {resourceDir} from "@tauri-apps/api/path"
 
+  onMount(async () => {
+    let dirPath = await resourceDir();
+    console.log(dirPath)
+  })
 </script>
 
 <div class="justify-center items-center h-full w-full flex">
