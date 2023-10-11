@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AppBar } from "@skeletonlabs/skeleton";
+  import { AppBar, SlideToggle } from "@skeletonlabs/skeleton";
   import { gearList } from "$lib/stores/equipment";
   import Item from "./Item.svelte";
 
@@ -7,6 +7,8 @@
     (acc[item.equipment.category] = acc[item.equipment.category] || []).push(index);
     return acc;
   }, {});
+
+  $: cloudToggleAll = false;
 
 
   function deleteItem(itemToDelete: any ) {
@@ -25,9 +27,10 @@
 </script>
 
 <section class="p-2">
-  <AppBar class="variant-ringed-surface py-2 rounded mt-1" slotTrail="w-full">
+  <AppBar class="variant-ringed-surface py-2 rounded mt-1" slotTrail="w-full" slotLead="space-x-4">
     <svelte:fragment slot="lead">
-      <button type="button" class="btn btn-sm variant-filled-primary" on:click={() => addEmptyGear($gearList.length)}>Add</button>
+      <button type="button" class="btn btn-sm variant-filled-primary" on:click={() => addEmptyGear($gearList.length)}>Add Gear</button>
+      <SlideToggle name="" bind:checked={cloudToggleAll}>Global Cloud Search</SlideToggle>
     </svelte:fragment>
     <svelte:fragment slot="trail">
       <button type="button" class="btn btn-sm variant-filled-error" on:click={() => $gearList = $gearList.filter(() => false)}>Remove All</button>
@@ -38,11 +41,11 @@
 
 
   {#each Object.entries(categories) as [category, indicies]}
-    <div class="variant-ghost-surface px-2 p-1 my-1 rounded">
+    <div class="bg-surface-100 variant-ringed px-2 p-1 my-1 rounded">
         <h2 class="font-bold text-primary-400">{category !== "" ? category.toUpperCase() : "EMPTY"}</h2>
       <ul class="list-disc list-inside">
         {#each indicies as i (i)}
-          <Item bind:gear={$gearList[i]}  on:delete={(e) => deleteItem(e.detail)}/>
+          <Item bind:gear={$gearList[i]} bind:cloudSearch={cloudToggleAll}  on:delete={(e) => deleteItem(e.detail)}/>
         {/each}
       </ul>
     </div>

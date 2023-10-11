@@ -259,8 +259,8 @@ pub struct AveryLabelPage {
 }
 
 impl AveryLabelPage {
-    pub fn new(labels: Vec<CableLabel>) -> Self {
-        let font_family = fonts::from_files("assets/fonts/Roboto", "Roboto", None).unwrap();
+    pub fn new(labels: Vec<CableLabel>, font_dir: impl AsRef<std::path::Path>) -> Self {
+        let font_family = fonts::from_files(font_dir, "Roboto", None).unwrap();
         let doc = Document::new(font_family);
         Self {
             labels,

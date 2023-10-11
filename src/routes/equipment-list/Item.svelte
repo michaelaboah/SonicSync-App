@@ -10,7 +10,7 @@
   import { PUBLIC_API_HOST } from "$env/static/public"
   export let gear: Gear
 
-  let cloudSearch = false; // Should be false by default to promote usage of local data before cloud and also reduce connectivity issues when offline
+  export let cloudSearch = false; // Should be false by default to promote usage of local data before cloud and also reduce connectivity issues when offline
   let modelList: Promise<AutocompleteOption[]> = Promise.resolve([])
 
   const dispatch = createEventDispatcher();
@@ -179,7 +179,7 @@
           label="Search Mode" 
           active="variant-filled-secondary" 
           background="variant-ringed-secondary"
-        />
+        >{cloudSearch ? "On" : "Off"}</SlideToggle>
 
     </td>
     <td class="w-fit mt-1 flex flex-row">

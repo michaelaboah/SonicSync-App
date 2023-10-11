@@ -3,10 +3,10 @@
   import { project } from '$lib/stores/project';
 	import { onMount } from 'svelte';
   import {resourceDir} from "@tauri-apps/api/path"
+	import { invoke } from "@tauri-apps/api/tauri";
 
   onMount(async () => {
-    let dirPath = await resourceDir();
-    console.log(dirPath)
+    invoke("resource")
   })
 </script>
 
