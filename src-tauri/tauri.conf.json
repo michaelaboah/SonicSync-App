@@ -20,6 +20,12 @@
         "all": false,
         "request": true,
         "scope": ["https://api.sonic-sync.com/"]
+      },
+      "fs": {
+        "all": true,
+        "scope": [
+          "$RESOURCE/*"
+        ]
       }
     },
     "bundle": {
@@ -46,7 +52,9 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
+      "resources": [
+        "resources/fonts/*"
+      ],
       "shortDescription": "",
       "targets": "all",
       "windows": {

@@ -4,7 +4,12 @@ use std::io::{BufWriter, Cursor};
 use tauri;
 
 #[tauri::command]
-pub fn print_4x20_labels(labels: Vec<serde_json::Value>) -> String {
+pub fn print_4x20_labels(handle: tauri::AppHandle, labels: Vec<serde_json::Value>) -> String {
+    let fonts_path = handle
+        .path_resolver()
+        .resolve_resource("resources/fonts/Roboto")
+        .unwrap();
+
     let mut formatted = Vec::with_capacity(labels.len());
     let labels_len = labels.len();
     for value in labels {
@@ -14,7 +19,7 @@ pub fn print_4x20_labels(labels: Vec<serde_json::Value>) -> String {
 
     assert_eq!(labels_len, formatted.len());
 
-    let page = AveryLabelPage::new(formatted);
+    let page = AveryLabelPage::new(formatted, fonts_path);
 
     // page.write_to_file("test_pdf.pdf");
 
@@ -22,13 +27,12 @@ pub fn print_4x20_labels(labels: Vec<serde_json::Value>) -> String {
     page.write_to_bytes(&mut buffer).unwrap();
 
     general_purpose::STANDARD.encode(buffer.into_inner())
-    // format!("")
 }
 
 #[test]
 fn cable_labels() {
     let labels = vec![CableLabel::default()];
 
-    let page = AveryLabelPage::new(labels);
+    let page = AveryLabelPage::new(labels, "resources/fonts/Roboto");
     page.write_to_file("test_pdf.pdf");
 }

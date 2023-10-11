@@ -7,6 +7,22 @@ use tauri::Manager;
 mod database;
 mod menus;
 mod printing;
+
+#[tauri::command]
+fn resource(handle: tauri::AppHandle) {
+    let fonts_path = handle
+        .path_resolver()
+        .resolve_resource("resources/fonts")
+        .unwrap();
+
+    let contents = std::fs::read_dir(fonts_path).unwrap();
+
+    for f in contents {
+        dbg!(f);
+    }
+
+    // let resource = fonts_path.join("/resources").is_dir());
+}
 fn main() {
     std::env::set_var("CG_PDF_VERBOSE", "true");
     let ctx = tauri::generate_context!();
@@ -37,6 +53,7 @@ fn main() {
         .menu(menu)
         .on_menu_event(menus::events::menu_event_handler)
         .invoke_handler(tauri::generate_handler![
+            resource,
             database_insert,
             fuzzy_by_model,
             find_by_model,

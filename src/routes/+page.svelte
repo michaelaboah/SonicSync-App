@@ -2,8 +2,11 @@
   import { cableList } from "$lib/stores/equipment";
   import { project } from '$lib/stores/project';
 	import { onMount } from 'svelte';
- 
+	import { invoke } from "@tauri-apps/api/tauri";
 
+  onMount(async () => {
+    invoke("resource")
+  })
 </script>
 
 <div class="justify-center items-center h-full w-full flex">
