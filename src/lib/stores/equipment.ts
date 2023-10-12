@@ -37,7 +37,7 @@ export const gearList = writable<Gear[]>([
       details: {} 
     },  
     items: [
-      { id: 0, description: "Primary", quantity: 0, purpose: "" },
+      { id: 0, description: "Primary", quantity: 1, purpose: "" },
     ]
   },
 ]);

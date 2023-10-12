@@ -53,6 +53,7 @@
         "svelte-infinite-scroll": "^2.0.1",
         "svelte-inview": "^4.0.1",
         "svelte-printpdf": "1.0.2-metadata",
+        "svelte-tiny-virtual-list": "^2.0.5",
         "svelvet": "^8.1.0",
         "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#v1",
         "tauri-plugin-printing-ext-api": "0.0.4",

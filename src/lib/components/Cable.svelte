@@ -3,6 +3,7 @@
 	import type { Cable } from "$lib/@types/equipment";
   import TrashIcon from "~icons/bi/trash"
   import CloseIcon from "~icons/ri/close-circle-line"
+  import CopyIcon from "~icons/ph/copy-duotone"
   import ColorPaletteIcon from "~icons/ic/outline-color-lens"
 	import { type AutocompleteOption, type PopupSettings, Autocomplete, popup } from "@skeletonlabs/skeleton";
 	import { bundleList } from "$lib/stores/flow";
@@ -56,11 +57,6 @@
     return cable
   }
 
-
-  // function loadColorPicker() {
-  //   colorPickerComponent = import("svelte-awesome-color-picker")
-  // }
-
   async function loadAutocomplete() {
     const { Autocomplete } = await import("@skeletonlabs/skeleton")
     autocompleteComponent = Autocomplete
@@ -70,9 +66,10 @@
     dispatch("delete", cable)
   }
 
-  // function handleSelect() {
-  //   dispatch("select", )
-  // }
+
+  function handleCopy() {
+    dispatch("copy", cable)
+  }
 
   function onBundleSelection(event: any): void {
     cable.bundle = event.detail.label;
@@ -99,7 +96,7 @@
   <td class={cellClass} >
 
     <p style="background-color: {hex}; color: {textColor}"
-      class="rounded px-4 py-0.5 w-full" 
+      class="px-4 py-1 w-full" 
       contenteditable="true"
       bind:textContent={cable.data.name}>
     </p>
@@ -181,6 +178,9 @@
         <!-- {/if} -->
       </div>
 
+      <button class="btn btn-sm variant-filled-tertiary p-0.5" on:click={handleCopy}>
+        <span class=""><CopyIcon/></span>
+      </button>
       <button class="btn btn-sm variant-filled-error p-0.5" on:click={handleDelete}>
         <span><TrashIcon/></span>
       </button>

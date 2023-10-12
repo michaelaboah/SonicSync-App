@@ -96,7 +96,7 @@
 
 <section class="px-2">
   <div class="w-full">
-    <AppBar class="variant-ringed-surface rounded py-1 my-1" slotTrail="w-full">
+    <AppBar class="variant-ringed-surface rounded py-1 " slotTrail="w-full">
       <svelte:fragment slot="lead">
         <div class="space-x-2 flex flex-row">
 
@@ -152,8 +152,13 @@
           </thead> 
 
           <tbody class="w-full" >
-            {#each activeCables as cable (cable.id) } 
-              <CableComponent selected={selectAll} bind:cable on:delete={(e) => deleteCable(e.detail)}/>       
+            {#each activeCables as cable (cable) } 
+              <CableComponent 
+                selected={selectAll} 
+                bind:cable 
+                on:copy={(e) => $cableList = [...$cableList, structuredClone(e.detail)]} 
+                on:delete={(e) => deleteCable(e.detail)}
+              />       
             {/each}
           </tbody>
       </table>

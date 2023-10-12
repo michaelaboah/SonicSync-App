@@ -3,10 +3,12 @@
   import { gearList } from "$lib/stores/equipment";
   import Item from "./Item.svelte";
 
-  $: categories = $gearList.reduce((acc, item, index) => {
+  $: categoryObject = $gearList.reduce((acc, item, index) => {
     (acc[item.equipment.category] = acc[item.equipment.category] || []).push(index);
     return acc;
   }, {});
+
+  $: categories = Object.entries(categoryObject)
 
   $: cloudToggleAll = false;
 
@@ -24,12 +26,31 @@
     $gearList = [...$gearList, empty];
   }
 
+  function addCustomGear(gearId: number, category: string) { 
+    let empty = {
+      equipment: { id: gearId, category, model: "", manufactuer: "", cost: 0, wattage: 0.0, details: {} },  
+      items: [{id: 0, description: "", quantity: 1}]
+    };
+
+    $gearList = [...$gearList, empty];
+  }
+
+  function newCategory() {
+    addCustomGear($gearList.length, "MISC")
+    categories = [...categories, ["MISC", [$gearList.length]]];
+    console.log(categories)
+    
+  }
+
 </script>
 
-<section class="p-2">
-  <AppBar class="variant-ringed-surface py-2 rounded mt-1" slotTrail="w-full" slotLead="space-x-4">
+
+
+<header class="z-10 sticky top-0 px-1">
+  <AppBar class="variant-ringed-surface py-2" slotTrail="w-full" slotLead="space-x-4">
     <svelte:fragment slot="lead">
       <button type="button" class="btn btn-sm variant-filled-primary" on:click={() => addEmptyGear($gearList.length)}>Add Gear</button>
+      <button type="button" class="btn btn-sm variant-filled-tertiary" on:click={() => newCategory()}>Add Category</button>
       <SlideToggle name="" bind:checked={cloudToggleAll}>Global Cloud Search</SlideToggle>
     </svelte:fragment>
     <svelte:fragment slot="trail">
@@ -37,15 +58,17 @@
     </svelte:fragment>
     <!-- <svelte:fragment slot="headline">(headline)</svelte:fragment> -->
   </AppBar >
+</header>
 
 
 
-  {#each Object.entries(categories) as [category, indicies]}
+<section class="p-1">
+  {#each categories as [category, indicies]}
     <div class="bg-surface-100 variant-ringed px-2 p-1 my-1 rounded">
         <h2 class="font-bold text-primary-400">{category !== "" ? category.toUpperCase() : "EMPTY"}</h2>
       <ul class="list-disc list-inside">
         {#each indicies as i (i)}
-          <Item bind:gear={$gearList[i]} bind:cloudSearch={cloudToggleAll}  on:delete={(e) => deleteItem(e.detail)}/>
+          <Item bind:gear={$gearList[i]} cloudSearch={cloudToggleAll}  on:delete={(e) => deleteItem(e.detail)}/>
         {/each}
       </ul>
     </div>

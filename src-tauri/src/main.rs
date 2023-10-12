@@ -8,26 +8,6 @@ mod database;
 mod menus;
 mod printing;
 
-#[tauri::command]
-fn resource(handle: tauri::AppHandle, window: tauri::Window) -> Vec<String> {
-    let mut fonts_path = handle.path_resolver().resource_dir().unwrap();
-
-    fonts_path.push("resources/fonts/Roboto");
-
-    let message = format!("Resource Directory: {:?}", fonts_path);
-    // let contents = std::fs::read_dir(fonts_path).unwrap();
-
-    std::thread::spawn(move || {
-        blocking::message(Some(&window), "Check Path", message);
-    });
-    let mut paths = vec![];
-    // for f in contents {
-    //     paths.push(f.unwrap().path().as_os_str().to_str().unwrap().to_owned());
-    // }
-
-    paths
-    // let resource = fonts_path.join("/resources").is_dir());
-}
 fn main() {
     std::env::set_var("CG_PDF_VERBOSE", "true");
     let ctx = tauri::generate_context!();
@@ -58,7 +38,6 @@ fn main() {
         .menu(menu)
         .on_menu_event(menus::events::menu_event_handler)
         .invoke_handler(tauri::generate_handler![
-            resource,
             database_insert,
             fuzzy_by_model,
             find_by_model,

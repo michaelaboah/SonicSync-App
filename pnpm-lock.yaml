@@ -41,6 +41,9 @@ dependencies:
   svelte-printpdf:
     specifier: 1.0.2-metadata
     version: 1.0.2-metadata
+  svelte-tiny-virtual-list:
+    specifier: ^2.0.5
+    version: 2.0.5
   svelvet:
     specifier: ^8.1.0
     version: 8.1.0(svelte@4.2.1)
@@ -4495,6 +4498,10 @@ packages:
 
   /svelte-printpdf@1.0.2-metadata:
     resolution: {integrity: sha512-669cRonUfjG9tS9Y9o6I/ukIjRAWZXT3ZI+ze3Ew9oulalRFTUE1UMmtaSBmHILJTuaiFGpgUNC04ZOS74fV0A==}
+    dev: false
+
+  /svelte-tiny-virtual-list@2.0.5:
+    resolution: {integrity: sha512-xg9ckb8UeeIme4/5qlwCrl2QNmUZ8SCQYZn3Ji83cUsoASqRNy3KWjpmNmzYvPDqCHSZjruBBsoB7t5hwuzw5g==}
     dev: false
 
   /svelte2tsx@0.5.23(svelte@4.2.1)(typescript@5.2.2):

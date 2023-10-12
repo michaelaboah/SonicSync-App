@@ -6,6 +6,7 @@
   import InfoIcon from "~icons/ri/information-line"
   import PlusIcon from "~icons/ri/add-circle-line"
   import TrashIcon from "~icons/bi/trash"
+  import CopyIcon from "~icons/ph/copy-duotone"
 	import { invoke } from '@tauri-apps/api/tauri';
   import { PUBLIC_API_HOST } from "$env/static/public"
   export let gear: Gear
@@ -144,6 +145,12 @@
       privateNotes: "",
     }
   }
+
+  function dupItem(newId: number, source: Item): Item {
+    source.id = newId;
+    let newItem = structuredClone(source) 
+    return newItem 
+  }
   
 </script>
 
@@ -219,7 +226,8 @@
       </tr>
     </thead>
     <tbody>
-      {#each gear.items as item (item.id) }
+      {#each gear.items as item (item) }
+
         <tr class="h-0">
           <td contenteditable="true" bind:innerText={item.description} class="w-32 max-w-80 overflow-clip overflow-wrap break-word @apply !py-0 !pt-1 italic text-opacity-30 border-r border-surface-300 dark:border-surface-500"></td>
           <td contenteditable="true" bind:innerText={item.purpose} class="@apply !py-0 italic text-opacity-30 border-r border-surface-300 dark:border-surface-500"></td>
@@ -228,8 +236,9 @@
           </td>
           <td class="@apply !py-0">
             <!-- <div class="btn-group scale-75"> -->
-              <!-- <button class="variant-filled-secondary">Temp</button> -->
-              <!-- <button class="variant-filled-tertiary">Info</button> -->
+              <button on:click={() => gear.items = [...gear.items, dupItem(gear.items.length, item)]} class="p-0.5 mt-1 btn btn-sm variant-filled-tertiary">
+                <span class=""><CopyIcon/></span>
+              </button>
               <button on:click={() => {gear.items = gear.items.filter(g => g !== item)}} class="p-0.5 mt-1 btn btn-sm variant-filled-error">
                 <span class=""><TrashIcon/></span>
               </button>

@@ -9,7 +9,7 @@
 </script>
 
 
-<TabGroup>
+<TabGroup regionPanel="mt-1 mx-0.5">
   <Tab bind:group={tabSet} name="Equipment" title="Equipment" value={0} >
     <!-- <svelte:fragment slot="lead"> -->
       Cables 
