@@ -2,25 +2,30 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use database::{database_insert, find_by_model, fuzzy_by_model, start_db};
-use tauri::Manager;
+use tauri::{self, api::dialog::blocking, Manager};
 // use tauri_plugin_log::LogTarget;
 mod database;
 mod menus;
 mod printing;
 
 #[tauri::command]
-fn resource(handle: tauri::AppHandle) {
-    let fonts_path = handle
-        .path_resolver()
-        .resolve_resource("resources/fonts")
-        .unwrap();
+fn resource(handle: tauri::AppHandle, window: tauri::Window) -> Vec<String> {
+    let mut fonts_path = handle.path_resolver().resource_dir().unwrap();
 
-    let contents = std::fs::read_dir(fonts_path).unwrap();
+    fonts_path.push("resources/fonts/Roboto");
 
-    for f in contents {
-        dbg!(f);
-    }
+    let message = format!("Resource Directory: {:?}", fonts_path);
+    // let contents = std::fs::read_dir(fonts_path).unwrap();
 
+    std::thread::spawn(move || {
+        blocking::message(Some(&window), "Check Path", message);
+    });
+    let mut paths = vec![];
+    // for f in contents {
+    //     paths.push(f.unwrap().path().as_os_str().to_str().unwrap().to_owned());
+    // }
+
+    paths
     // let resource = fonts_path.join("/resources").is_dir());
 }
 fn main() {

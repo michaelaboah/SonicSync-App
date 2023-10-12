@@ -81,7 +81,7 @@
 
   async function macosPrint() {
     const base64 = await invoke<string>("print_4x20_labels", { labels: $cableList } );
-
+    // console.log(base64)
     if (navigator.userAgent.includes("Mac")) {
       printDialog(base64);
     }

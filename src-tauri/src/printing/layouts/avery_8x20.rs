@@ -3,6 +3,7 @@ use genpdf::fonts::FontCache;
 use genpdf::style::{Color, Style};
 use genpdf::*;
 use std::fs;
+use std::path::{Path, PathBuf};
 #[derive(Default)]
 struct AveryLabelLayout {
     page: usize,
@@ -254,18 +255,25 @@ impl Default for LabelMeta {
 }
 
 pub struct AveryLabelPage {
+    dir: PathBuf,
     labels: Vec<CableLabel>,
     document: Document,
 }
 
 impl AveryLabelPage {
-    pub fn new(labels: Vec<CableLabel>, font_dir: impl AsRef<std::path::Path>) -> Self {
-        let font_family = fonts::from_files(font_dir, "Roboto", None).unwrap();
+    pub fn new(
+        labels: Vec<CableLabel>,
+        font_dir: impl AsRef<std::path::Path>,
+        tmp: PathBuf,
+    ) -> Result<Self, genpdf::error::Error> {
+        let font_family = fonts::from_files(font_dir, "Roboto", None)?;
         let doc = Document::new(font_family);
-        Self {
+
+        Ok(Self {
+            dir: tmp.join("tmp"),
             labels,
             document: doc,
-        }
+        })
     }
 
     fn render(&mut self) {
@@ -309,10 +317,16 @@ impl AveryLabelPage {
     /// [std::io::Cursor<Vec<u8>>]
     pub fn write_to_bytes(mut self, write_buffer: &mut impl std::io::Write) -> std::io::Result<()> {
         self.render();
-        self.document.render_to_file("temp.pdf").unwrap();
+        fs::create_dir_all(&self.dir).unwrap();
 
-        let buffer = fs::read("temp.pdf").unwrap();
-        fs::remove_file("temp.pdf").unwrap();
+        let ref temp_pdf = self.dir.join("temp.pdf");
+        dbg!(temp_pdf);
+
+        self.document.render_to_file(temp_pdf).unwrap();
+
+        let buffer = fs::read(temp_pdf).unwrap();
+        fs::remove_file(temp_pdf).unwrap();
+
         let written_bytes = write_buffer.write(&buffer).unwrap();
         assert_eq!(buffer.len(), written_bytes);
         Ok(())

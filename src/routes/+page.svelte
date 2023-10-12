@@ -5,7 +5,7 @@
 	import { invoke } from "@tauri-apps/api/tauri";
 
   onMount(async () => {
-    invoke("resource")
+    console.log(invoke("resource"))
   })
 </script>
 
