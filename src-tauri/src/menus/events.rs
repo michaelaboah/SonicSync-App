@@ -67,13 +67,15 @@ fn save_project(event_name: &str, event: tauri::WindowMenuEvent) {
             // .add_filter("Project File Extensions", &["syn"])
             .save_file();
 
+        dbg!(&path);
+
         if path.is_none() {
             return;
         }
 
         event
             .window()
-            .emit("save-project-fetch", path.unwrap())
+            .emit("save-project-as", path.unwrap())
             .unwrap();
     });
 }

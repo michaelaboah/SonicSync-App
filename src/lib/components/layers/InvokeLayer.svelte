@@ -17,7 +17,7 @@
 
       invoke("save", { path: $meta.currentFilePath, object: $project })
         toastStore.trigger({ message: "Saved Project [Auto]", classes: "p-2", timeout: 1000 * 10})
-    }, $preferences.general.autoSaveTimer) 
+    }, $preferences.general.autoSaveTimer * 60 * 1000) 
 
 
     listen('load-project', ({ payload: [path, project] }) => {
@@ -26,14 +26,14 @@
       toastStore.trigger({ message: `Project: ${path} Loaded`, classes: "p-2", timeout: 1000 * 10})
     }) 
 
-    listen("save-project-fetch", ({ payload: path }) => {
+    listen("save-project-as", ({ payload: path }) => {
       meta.set({currentFilePath: path}) 
-      invoke("save", { path, object: $project })
+      invoke("save", { path , object: $project })
     })
 
-    listen("save-project-fetch", () => {
-      invoke("save", { path: $meta.currentFilePath, object: $project })
-    })
+    // listen("save-project-fetch", () => {
+    //   invoke("save", { path: $meta.currentFilePath, object: $project })
+    // })
 
   })
 </script>

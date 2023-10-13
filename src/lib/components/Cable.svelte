@@ -15,7 +15,6 @@
   export let cable: Cable
   export let selected = false;
 
-  // let colorPickerComponent: Promise<ComponentType>;
   let autocompleteComponent: ComponentType;
 
   let bundleOptions: AutocompleteOption[] = $bundleList.map((x) => {
@@ -28,7 +27,7 @@
   const dispatch = createEventDispatcher();
   const popupTarget = (Math.random() + 1).toString(36).substring(7);
   const popupSettings: PopupSettings = {
-    event: 'focus-click',
+    event: 'click',
     target: popupTarget,
     placement: 'bottom'
   };
@@ -37,7 +36,7 @@
   const popupSettingsColorPicker: PopupSettings = {
     event: 'focus-click',
     target: popupColorPicker,
-    placement: 'bottom'
+    placement: 'bottom-'
   };
 
 
@@ -122,6 +121,7 @@
         <option value="Power">Power</option>
         <option value="Analog">Analog</option>
         <option value="Digital">Digital</option>
+        <option value="Network">Network</option>
       </select>
     {/key}
   </td>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Analog, PowerConnector } from "$lib/@types/graphql";
+  import { Analog, ComputerConnKind, PowerConnector, NetworkCableKind } from "$lib/@types/graphql";
   import type { Connection } from "$lib/@types/equipment"
 	import { gearList } from "$lib/stores/equipment";
 	import { type AutocompleteOption, type PopupSettings, Autocomplete, popup, modeCurrent } from "@skeletonlabs/skeleton";
@@ -8,10 +8,10 @@
 
   type ConnectionKind = "source" | "destination"
 
-  export let cellClass = "!py-0.5 border-surface-300 dark:border-surface-500"
+  export let cellClass = "!py-0.5 border border-surface-300 dark:border-surface-500"
   export let connection: Connection;
   export let connKind: ConnectionKind;
-  export let cableKind: "Power" | "Analog" | "Digital" = "Analog";
+  export let cableKind: "Power" | "Analog" | "Digital" | "Network" = "Analog";
 
   let variants: string[] = []
   $: switch (cableKind) {
@@ -24,9 +24,12 @@
         break;
       }
       case "Digital": {
-        // variants = Object.values() 
+        variants = Object.values(ComputerConnKind).map((x) => x.replaceAll("_", " ").toUpperCase()) 
         break;
       }
+      case "Network": {
+        variants = Object.values(NetworkCableKind)
+    }
   }  
 
   const popupTarget = (Math.random() + 1).toString(36).substring(7);
@@ -38,7 +41,7 @@
 
 
   $: possibleEquips = $gearList.filter((x) => JSON.stringify(x).includes("analog_connections")).map((t) => {
-    console.log(t)
+    // console.log(t)
     return { label: t.equipment.model, value: t.equipment.model } as AutocompleteOption 
   })
 

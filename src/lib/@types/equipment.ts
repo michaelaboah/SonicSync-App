@@ -1,4 +1,4 @@
-import type { Analog, Category, ComputerConnKind, NetworkType, PowerConnector } from "./graphql"
+import type { Analog, Category, ComputerConnKind, NetworkCableKind, PowerConnector } from "./graphql"
 import type { Bundle } from "./flow"
 
 // How details of a singular Gear Item
@@ -61,7 +61,7 @@ export type Cable = {
 
 export type Connection = {
   name: string,
-  kind: Analog | PowerConnector | NetworkType, 
+  kind: Analog | PowerConnector | NetworkCableKind | ComputerConnKind, 
 }
 
 

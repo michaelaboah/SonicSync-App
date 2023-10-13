@@ -11,7 +11,7 @@ export let DEFAULT: Preferences = {
   ui: { sidebar: true, darkMode: true },
   cloud: {rememberMe: false },
   database: {autoStore: true, dataSeachMode: true},
-  general: {autoSaveTimer: 1000 * 60 }
+  general: {autoSaveTimer: 5 }
 }
 
 export type UI = {
