@@ -36,7 +36,7 @@
   const popupSettingsColorPicker: PopupSettings = {
     event: 'focus-click',
     target: popupColorPicker,
-    placement: 'bottom-'
+    placement: 'bottom'
   };
 
 

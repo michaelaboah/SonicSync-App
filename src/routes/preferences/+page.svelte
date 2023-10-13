@@ -55,7 +55,7 @@
         <input class="input w-1/12 italic" type="number" bind:value={$preferences.general.autoSaveTimer}/>
         <button class="btn btn-md py-1.5 px-2 variant-filled-tertiary">Default (5min)</button>
       </div>
-        <button class="btn btn-md py-1.5 px-2 variant-filled-error" on:click={resetPrefs}>Reset Preferences</button>
+        <button class="btn btn-md py-1.5 px-2 mt-4 variant-filled-error" on:click={resetPrefs}>Reset Preferences</button>
     </section>
   </section>
 
@@ -95,7 +95,7 @@
         ><span class="mr-2"><FolderIcon/></span>Go to Database</button>
       </div>
 
-        <button class="btn btn-md py-1.5 px-2 variant-filled-error" on:click={clearDatabase}>Clear Database</button> 
+        <button class="btn btn-md py-1.5 px-2 mt-4 variant-filled-error" on:click={clearDatabase}>Clear Database</button> 
     </section>
   </section>
 
