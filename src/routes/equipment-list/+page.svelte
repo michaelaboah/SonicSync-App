@@ -70,9 +70,12 @@
     <div class="bg-surface-100 variant-ringed px-2 p-1 my-1 rounded">
         <h2 class="font-bold text-primary-400">{category !== "" ? category.toUpperCase() : "EMPTY"}</h2>
       <ul class="list-disc list-inside">
-        {#each indicies as i (i)}
+       <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
+       {#each indicies as i (i)}
           <Item bind:gear={$gearList[i]} cloudSearch={cloudToggleAll}  on:delete={(e) => deleteItem(e.detail)}/>
         {/each}
+      {/key}
       </ul>
     </div>
   {:else}
