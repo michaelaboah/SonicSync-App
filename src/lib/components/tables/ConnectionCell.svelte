@@ -2,7 +2,7 @@
   import { Analog, PowerConnector } from "$lib/@types/graphql";
   import type { Connection } from "$lib/@types/equipment"
 	import { gearList } from "$lib/stores/equipment";
-	import { type AutocompleteOption, type PopupSettings, Autocomplete, popup } from "@skeletonlabs/skeleton";
+	import { type AutocompleteOption, type PopupSettings, Autocomplete, popup, modeCurrent } from "@skeletonlabs/skeleton";
   import CloseIcon from "~icons/ri/close-circle-line"
   import EditIcon from "~icons/ri/edit-2-line"
 
@@ -48,10 +48,12 @@
     connection.name = e.detail.label;
   }
 </script>
-  <td class={cellClass + " w-1/5"}>
+  <td class={cellClass}>
 
     <div class="flex flex-row h-7 space-x-1">
 
+      <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
       <input
         class="input w-full autocomplete text-xs"
         type="search"
@@ -60,30 +62,21 @@
         placeholder={connKind === "source" ? "Find Source..." : "Find Dest..."}
         use:popup={popupSettings}
       />
-
+      {/key}
       <div data-popup={popupTarget} class="card w-40 max-w-sm max-h-48 text-xs m-0 overflow-y-auto" tabindex="-1">
           <Autocomplete bind:input={connection.name} bind:options={possibleEquips} on:selection={onConnSelection} />
       </div>
      
-      <!-- {#if connection.kind } -->
-      
+      <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
+
         <select class="select w-full text-sm pl-1 p-0" placeholder="Select Termination" name="Choose" bind:value={connection.kind}>
           {#each variants as v }
             <option class="bg-surface-50" value={v}>{v}</option> 
           {/each} 
         </select>
-
-      <!-- {:else} -->
-      <!---->
-      <!--   <select class="select w-full text-sm pl-1 p-0" placeholder="Select Type" name="Choose"> -->
-      <!--       <option>Empty</option>  -->
-      <!--   </select> -->
-      <!---->
-      <!-- {/if} -->
+        {/key}
       <div class="flex flex-row">
-
-        <!-- <button class="btn btn-icon p-0 m-0 h-7 w-fit" on:click={() => connection = null}><span><CloseIcon/></span></button> -->
-
       </div>
 
     </div>

@@ -4,6 +4,7 @@
   import SunIcon from "~icons/ri/sun-line"
   import MoonIcon from "~icons/ri/moon-clear-fill"
 	import { invoke } from "@tauri-apps/api/tauri";
+  import { appLocalDataDir  } from "@tauri-apps/api/path"
   let value = $modeCurrent ? 0 : 1 
 
   $: if (value === 0) {
@@ -13,6 +14,9 @@
   } //else if (value === 2) {
   //   setModeCurrent($modeOsPrefers)
   // }
+ 
+
+  ;
 
 </script>
 
@@ -39,7 +43,6 @@
     <div class="flex flex-row ml-4">
 
       <h4 class="h5 mt-1"><strong>Theme: </strong></h4>
-
       <RadioGroup rounded="rounded-token" active="variant-filled-primary" class="scale-75" >
         <RadioItem bind:group={value} name="justify" value={0}>Light</RadioItem>
         <RadioItem bind:group={value} name="justify" value={1}>Dark</RadioItem>
@@ -54,7 +57,14 @@
     <h2 class="h3">Database Settings</h2>
     <hr class="w-5/6 mt-4 mb-2"/>
   
-    <div class="flex flex-row ml-4">
+    <div class="flex flex-row space-x-4 items-center">
+      <p class="font-bold">Database Location:</p>
+      {#await appLocalDataDir() then path }
+        {#key $modeCurrent}
+          <input type="text" class="input w-1/3" disabled value={path + "database"}>
+        {/key}
+      {/await}
+      <button class="btn btn-md variant-filled-tertiary" on:click={() => invoke("open_database_folder")}>Go to Database</button>
       <button class="btn btn-md variant-filled-error" on:click={() => invoke("delete_all")}>Clear Database</button> 
     </div>
 

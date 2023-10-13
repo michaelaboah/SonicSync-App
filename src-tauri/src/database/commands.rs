@@ -150,6 +150,26 @@ pub fn get_all_items(db: tauri::State<Database>) -> Vec<models::Item> {
     items
 }
 
+use std::process::Command;
+
+const DATABASE_FILE_NAME: &'static str = "database/primary-polo.db";
+#[command]
+pub fn open_database_folder(handle: tauri::AppHandle) {
+    let dir = handle
+        .path_resolver()
+        .app_local_data_dir()
+        .expect("Directory was removed during running of app.");
+    let db_pri_path = dir.join("database");
+
+    if cfg!(target_os = "linux") {
+        Command::new("xdg-open").arg(db_pri_path).spawn().unwrap();
+    } else if cfg!(target_os = "macos") {
+        Command::new("open").arg(db_pri_path).spawn().unwrap();
+    } else {
+        Command::new("start").arg(db_pri_path).spawn().unwrap();
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::database::runtime::setup_indicies;

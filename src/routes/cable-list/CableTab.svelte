@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AppBar, type PopupSettings, popup } from "@skeletonlabs/skeleton";
+  import { AppBar, type PopupSettings, popup, modeCurrent } from "@skeletonlabs/skeleton";
   import { cableList } from "$lib/stores/equipment"
 	import { Analog } from "$lib/@types/graphql";
 	import type { Cable } from "$lib/@types/equipment";
@@ -99,9 +99,10 @@
     <AppBar class="variant-ringed-surface rounded py-1 " slotTrail="w-full">
       <svelte:fragment slot="lead">
         <div class="space-x-2 flex flex-row">
-
+      <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
           <input class="input w-24 h-7" min={1} max={100} type="number" bind:value={numberOfCablesToAdd} use:popup={cableNumberInputPopup}/>
-
+      {/key}
           {#if cableNumberPopup }
             <div data-popup="cableNumber" class="card w-28 p-2 text-center" tabindex="-1">Max Number is 100</div>
           {/if}

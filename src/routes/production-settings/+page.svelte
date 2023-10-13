@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FileDropzone } from "@skeletonlabs/skeleton";
+  import { FileDropzone, modeCurrent } from "@skeletonlabs/skeleton";
   import DownloadIcon from "~icons/ri/file-upload-line"
   import CloseIcon from "~icons/ri/close-circle-line"
   import PhotoIcon from "~icons/ri/image-2-line"
@@ -78,7 +78,11 @@
           <td colspan="5">
             <div class="flex items-center space-x-4 ">
               <h3 class="h5 whitespace-nowrap">Add New Role</h3>
-              <input class="input text-sm" type="text" bind:value={newRole}>
+
+              <!-- Fix theme switch bug -->
+              {#key $modeCurrent }
+                <input class="input text-sm" type="text" bind:value={newRole}>
+              {/key}
               <button class="btn variant-filled-secondary" on:click={addNewRole}>Add Role</button>
             </div>
           </td>
@@ -95,6 +99,7 @@
 
 
   <span class="divider-vertical h-full w-0" />
+{#key $modeCurrent}
   <section class="flex-grow w-1/2 ml-4 ">
     <h2 class="h2">Details</h2>
     <h4 class="h6 italic mb-4 opacity-70">Additional Information for Paperwork</h4>
@@ -165,4 +170,5 @@
       </div>
     </div>
   </section>
+  {/key}
 </div>

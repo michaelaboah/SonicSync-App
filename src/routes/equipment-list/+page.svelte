@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AppBar, SlideToggle } from "@skeletonlabs/skeleton";
+  import { AppBar, SlideToggle, modeCurrent } from "@skeletonlabs/skeleton";
   import { gearList } from "$lib/stores/equipment";
   import Item from "./Item.svelte";
 
@@ -51,7 +51,10 @@
     <svelte:fragment slot="lead">
       <button type="button" class="btn btn-sm variant-filled-primary" on:click={() => addEmptyGear($gearList.length)}>Add Gear</button>
       <button type="button" class="btn btn-sm variant-filled-tertiary" on:click={() => newCategory()}>Add Category</button>
-      <SlideToggle name="" bind:checked={cloudToggleAll}>Global Cloud Search</SlideToggle>
+      <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
+        <SlideToggle name="" bind:checked={cloudToggleAll}>Global Cloud Search</SlideToggle>
+      {/key}
     </svelte:fragment>
     <svelte:fragment slot="trail">
       <button type="button" class="btn btn-sm variant-filled-error" on:click={() => $gearList = $gearList.filter(() => false)}>Remove All</button>

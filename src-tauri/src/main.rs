@@ -46,6 +46,7 @@ fn main() {
             database::delete_by_model,
             database::update_by_model,
             database::find_many_by_model,
+            database::open_database_folder,
             menus::events::save,
             printing::commands::print_4x20_labels,
         ]);

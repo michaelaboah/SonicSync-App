@@ -5,7 +5,7 @@
   import CloseIcon from "~icons/ri/close-circle-line"
   import CopyIcon from "~icons/ph/copy-duotone"
   import ColorPaletteIcon from "~icons/ic/outline-color-lens"
-	import { type AutocompleteOption, type PopupSettings, Autocomplete, popup } from "@skeletonlabs/skeleton";
+	import { type AutocompleteOption, type PopupSettings, Autocomplete, popup, modeCurrent } from "@skeletonlabs/skeleton";
 	import { bundleList } from "$lib/stores/flow";
 	import type { Bundle } from "$lib/@types/flow";
 	import ConnectionCell from "$lib/components/tables/ConnectionCell.svelte";
@@ -90,7 +90,10 @@
 <tr class="">
 
   <td class="!py-0.5 !px-1 border-surface-300 dark:border-surface-500">
-    <input class="checkbox" type="checkbox" bind:checked={selected}/>
+    <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
+        <input class="checkbox" type="checkbox" bind:checked={selected}/>
+      {/key}
   </td>
 
   <td class={cellClass} >
@@ -112,23 +115,30 @@
   </td>
 
   <td class={cellClass}>
-    <select class="select w-full h-7 text-sm pl-1 p-0" placeholder="Select Type" bind:value={cable.data.cableKind}>
-      <option value="Power">Power</option>
-      <option value="Analog">Analog</option>
-      <option value="Digital">Digital</option>
-    </select>
+
+    <!-- Fix theme switch bug -->
+    {#key $modeCurrent}
+      <select class="select w-full h-7 text-sm pl-1 p-0" placeholder="Select Type" bind:value={cable.data.cableKind}>
+        <option value="Power">Power</option>
+        <option value="Analog">Analog</option>
+        <option value="Digital">Digital</option>
+      </select>
+    {/key}
   </td>
 
   <td class={cellClass}>
-
-    <input class="input h-7 py-0 w-full m-0" type="number" bind:value={cable.data.length}/>
-
+      <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
+        <input class="input h-7 py-0 w-full m-0" type="number" bind:value={cable.data.length}/>
+      {/key}
   </td>
 
-  <td class={cellClass + " w-52"}> 
+  <td class={cellClass}> 
 
     <div class="flex flex-row h-7">
-      
+ <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
+     
       <input
         class="input w-full autocomplete text-xs"
         type="search"
@@ -138,7 +148,7 @@
         use:popup={popupSettings}
         on:focus={loadAutocomplete}
       />
-
+      {/key}
       <div data-popup={popupTarget}  class="card w-40 max-w-sm m-h-48 text-xs p-1 m-0 overflow-y-auto" tabindex="-1">
           {#if autocompleteComponent}
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte"
   import type { AutocompleteOption, PopupSettings } from '@skeletonlabs/skeleton';
-  import { Autocomplete, SlideToggle, ProgressRadial, popup, toastStore } from '@skeletonlabs/skeleton';
+  import { Autocomplete, SlideToggle, ProgressRadial, popup, toastStore, modeCurrent } from '@skeletonlabs/skeleton';
   import type { Equip, Gear, Item } from "$lib/@types/equipment"
   import InfoIcon from "~icons/ri/information-line"
   import PlusIcon from "~icons/ri/add-circle-line"
@@ -159,15 +159,17 @@
   <tr class="flex w-full h-fit">
     <td class="flex flex-row">
 
-      <input
-        class="input w-fit autocomplete h-8"
-        type="search"
-        name="autocomplete-search"
-        bind:value={gear.equipment.model}
-        placeholder="Search for model..."
-        use:popup={popupSettings}
-      />
-
+        <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
+        <input
+          class="input w-fit autocomplete h-8"
+          type="search"
+          name="autocomplete-search"
+          bind:value={gear.equipment.model}
+          placeholder="Search for model..."
+          use:popup={popupSettings}
+        />
+        {/key}
       <div data-popup={popupTarget} class="card w-52 max-w-sm max-h-48 p-4 overflow-y-auto" tabindex="-1">
 
           {#await modelList}
@@ -177,6 +179,8 @@
           {/await}
             
       </div>
+      <!-- Fix theme switch bug -->
+      {#key $modeCurrent}
           <!-- Add Tooltip later -->
         <SlideToggle 
           name="search-mode-slide" 
@@ -187,7 +191,7 @@
           active="variant-filled-secondary" 
           background="variant-ringed-secondary"
         >{cloudSearch ? "On" : "Off"}</SlideToggle>
-
+      {/key}
     </td>
     <td class="w-fit mt-1 flex flex-row">
       <strong class="ml-4 mr-2 whitespace-nowrap">Total Cost:</strong>
@@ -232,7 +236,10 @@
           <td contenteditable="true" bind:innerText={item.description} class="w-32 max-w-80 overflow-clip overflow-wrap break-word @apply !py-0 !pt-1 italic text-opacity-30 border-r border-surface-300 dark:border-surface-500"></td>
           <td contenteditable="true" bind:innerText={item.purpose} class="@apply !py-0 italic text-opacity-30 border-r border-surface-300 dark:border-surface-500"></td>
           <td class="@apply !py-0 !pt-1 italic text-opacity-30  border-r border-surface-300 dark:border-surface-500">
+          <!-- Fix theme switch bug -->
+          {#key $modeCurrent}
             <input class="input h-fit py-0 w-20 m-0" type="number" bind:value={item.quantity}/>
+          {/key}
           </td>
           <td class="@apply !py-0">
             <!-- <div class="btn-group scale-75"> -->
