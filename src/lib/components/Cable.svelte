@@ -34,7 +34,7 @@
 
   const popupColorPicker = (Math.random() + 1).toString(36).substring(7);
   const popupSettingsColorPicker: PopupSettings = {
-    event: 'focus-click',
+    event: 'click',
     target: popupColorPicker,
     placement: 'bottom'
   };
