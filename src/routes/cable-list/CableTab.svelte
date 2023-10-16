@@ -143,9 +143,9 @@
               </th>
               <th class="!p-1 text-center w-1/12">Name</th>
               <th class="!p-1 text-center w-1/12">Description</th>
-              <th class="!p-1 text-center w-1/12">Model</th>
+              <!-- <th class="!p-1 text-center w-1/12">Model</th> -->
               <th class="!p-1 text-center w-1/12">Type</th>
-              <th class="!p-1 text-center w-1/12">Length</th>
+              <th class="!p-1 text-center w-1/12">Length<span class="italic">(feet)</span></th>
               <th class="!p-1 text-center w-1/12">Bundle</th>
               <th class="!p-1 text-center w-2/12">Source</th>
               <th class="!p-1 text-center w-2/12">Destination</th>

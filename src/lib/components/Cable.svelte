@@ -107,13 +107,13 @@
     <p class="rounded py-0.5" contenteditable="true" bind:textContent={cable.data.description}></p>
   </td>
   
-  <td class={cellClass} >
-    <p class="rounded py-0.5" contenteditable="true" bind:textContent={cable.data.model}></p>
-  </td>
+  <!-- <td class={cellClass} > -->
+  <!--   <p class="rounded py-0.5" contenteditable="true" bind:textContent={cable.data.model}></p> -->
+  <!-- </td> -->
 
   <td class={cellClass}>
 
-      <select class="select w-full h-7 text-sm pl-1 p-0" placeholder="Select Type" bind:value={cable.data.cableKind}>
+      <select class="select w-full h-7 text-xs pl-1 p-0" placeholder="Select Type" bind:value={cable.data.cableKind}>
         <option value="Power">Power</option>
         <option value="Analog">Analog</option>
         <option value="Digital">Digital</option>

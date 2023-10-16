@@ -42,6 +42,7 @@
 
 
   $: possibleEquips = $gearList.filter((x) => {
+      console.log(x.equipment)
     switch (cableKind) {
       case "Analog": {
         return JSON.stringify(x.equipment).includes("analog") || x.equipment.category == Category.Microphones 
@@ -85,7 +86,7 @@
           <Autocomplete bind:input={connection.name} options={possibleEquips} on:selection={onConnSelection} />
       </div>
      
-        <select class="select w-full text-sm p-0" placeholder="Select Termination" name="Choose" bind:value={connection.kind}>
+        <select class="select w-full text-xs p-0" placeholder="Select Termination" name="Choose" bind:value={connection.kind}>
           {#each variants as v }
             <option class="bg-surface-50" value={v}>{v}</option> 
           {/each} 
