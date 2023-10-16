@@ -6,6 +6,7 @@
 	import type { Project } from "$lib/@types/project";
 	import { preferences } from "$lib/stores/user";
   import { toastStore } from "@skeletonlabs/skeleton" 
+	import { goto } from "$app/navigation";
  
 
   onMount(async () => {
@@ -31,9 +32,9 @@
       invoke("save", { path , object: $project })
     })
 
-    // listen("save-project-fetch", () => {
-    //   invoke("save", { path: $meta.currentFilePath, object: $project })
-    // })
+    listen("goto-preferences", () => {
+      goto("/preferences")
+    })
 
   })
 </script>

@@ -94,7 +94,7 @@
 </script>
 
 
-<section class="px-2">
+<section class="">
   <div class="w-full">
     <AppBar class="variant-ringed-surface rounded py-1 " slotTrail="w-full">
       <svelte:fragment slot="lead">
@@ -141,8 +141,8 @@
               <th class="!p-1 text-center w-8">
                 <input class="checkbox" type="checkbox" bind:checked={selectAll}/>
               </th>
-              <th class="!p-1 text-center w-2/12">Name</th>
-              <th class="!p-1 text-center w-2/12">Description</th>
+              <th class="!p-1 text-center w-1/12">Name</th>
+              <th class="!p-1 text-center w-1/12">Description</th>
               <th class="!p-1 text-center w-1/12">Model</th>
               <th class="!p-1 text-center w-1/12">Type</th>
               <th class="!p-1 text-center w-1/12">Length</th>
@@ -152,6 +152,7 @@
               <th class="!p-1 text-center w-1/12">Actions</th>
           </thead> 
 
+      {#key $modeCurrent}
           <tbody class="w-full" >
             {#each activeCables as cable (cable) } 
               <CableComponent 
@@ -162,6 +163,7 @@
               />       
             {/each}
           </tbody>
+      {/key}
       </table>
     </div>
 

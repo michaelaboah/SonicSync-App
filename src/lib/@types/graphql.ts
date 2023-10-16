@@ -14,7 +14,33 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Amplifier = {
+  __typename?: 'Amplifier';
+  analog_connections?: Maybe<Array<AnalogConn>>;
+  max_sample_rate: SampleRate;
+  midi?: Maybe<MidiType>;
+  network_connections?: Maybe<Array<NetworkConn>>;
+  power: Power;
+  signal_protocol?: Maybe<Protocol>;
+  total_inputs: Scalars['Int']['output'];
+  total_ouputs: Scalars['Int']['output'];
+  word_clock: Scalars['Boolean']['output'];
+};
+
+export type AmplifierInput = {
+  analog_connections?: InputMaybe<Array<AnalogConnInput>>;
+  max_sample_rate: SampleRate;
+  midi?: InputMaybe<MidiType>;
+  network_connections?: InputMaybe<Array<NetworkConnInput>>;
+  power: PowerInput;
+  signal_protocol?: InputMaybe<Protocol>;
+  total_inputs: Scalars['Int']['input'];
+  total_ouputs: Scalars['Int']['input'];
+  word_clock: Scalars['Boolean']['input'];
+};
+
 export enum Analog {
+  Bnc = 'BNC',
   Dc_12V = 'DC_12V',
   DualPinPhoenix = 'DUAL_PIN_PHOENIX',
   Nl2 = 'NL2',
@@ -25,7 +51,8 @@ export enum Analog {
   Trs = 'TRS',
   Ts = 'TS',
   XlrAnalog = 'XLR_ANALOG',
-  XlrDigital = 'XLR_DIGITAL'
+  XlrDigital = 'XLR_DIGITAL',
+  XlrQuarterCombo = 'XLR_QUARTER_COMBO'
 }
 
 export type AnalogConn = {
@@ -59,17 +86,26 @@ export enum Category {
   Monitoring = 'MONITORING',
   Network = 'NETWORK',
   Processor = 'PROCESSOR',
-  Radio = 'RADIO',
+  Receiver = 'RECEIVER',
   Speaker = 'SPEAKER',
-  SpkHardware = 'SPK_HARDWARE'
+  SpkHardware = 'SPK_HARDWARE',
+  Stagebox = 'STAGEBOX',
+  Transmitter = 'TRANSMITTER'
 }
 
-export type CategoryDetails = Computer | Console | Microphone;
+export type CategoryDetails = Amplifier | Computer | Console | Microphone | Monitoring | Processor | Rx | Speaker | StageBox | Tx;
 
 export type CategoryDetailsInput = {
+  amplifier_input?: InputMaybe<AmplifierInput>;
   computer_input?: InputMaybe<ComputerInput>;
   console_input?: InputMaybe<ConsoleInput>;
   microphone_input?: InputMaybe<MicrophoneInput>;
+  monitoring_input?: InputMaybe<MonitoringInput>;
+  processor_input?: InputMaybe<ProcessorInput>;
+  rx_input?: InputMaybe<RxInput>;
+  speaker_input?: InputMaybe<SpeakerInput>;
+  stagebox_input?: InputMaybe<StageBoxInput>;
+  tx_input?: InputMaybe<TxInput>;
 };
 
 export type Computer = {
@@ -136,6 +172,7 @@ export type Console = {
   power: Power;
   protocol_inputs: Scalars['Int']['output'];
   signal_protocol: Protocol;
+  word_clock: Scalars['Boolean']['output'];
 };
 
 export type ConsoleInput = {
@@ -149,6 +186,7 @@ export type ConsoleInput = {
   power?: InputMaybe<PowerInput>;
   protocol_inputs: Scalars['Int']['input'];
   signal_protocol: Protocol;
+  word_clock: Scalars['Boolean']['input'];
 };
 
 export enum DiaphagmSize {
@@ -179,10 +217,10 @@ export type Error = {
 export type Item = {
   __typename?: 'Item';
   category: Category;
-  cost: Scalars['Float']['output'];
   created_at: Scalars['String']['output'];
   details?: Maybe<CategoryDetails>;
   dimensions?: Maybe<Dimension>;
+  keywords?: Maybe<Array<Scalars['String']['output']>>;
   manufacturer: Scalars['String']['output'];
   model: Scalars['String']['output'];
   notes?: Maybe<Scalars['String']['output']>;
@@ -193,8 +231,8 @@ export type Item = {
 
 export type ItemInput = {
   category?: Category;
-  cost: Scalars['Float']['input'];
   dimensions?: InputMaybe<DimensionInput>;
+  keywords?: InputMaybe<Array<Scalars['String']['input']>>;
   manufacturer: Scalars['String']['input'];
   model: Scalars['String']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
@@ -239,6 +277,25 @@ export enum MidiType {
   Usb = 'USB'
 }
 
+export type Monitoring = {
+  __typename?: 'Monitoring';
+  analog_connections?: Maybe<Array<AnalogConn>>;
+  computer_ports?: Maybe<Array<ComputerConn>>;
+  distro: Scalars['Boolean']['output'];
+  network_connections?: Maybe<Array<NetworkConn>>;
+  power: Power;
+  signal_protocol: Protocol;
+};
+
+export type MonitoringInput = {
+  analog_connections?: InputMaybe<Array<AnalogConnInput>>;
+  computer_ports?: InputMaybe<Array<ComputerConnInput>>;
+  distro: Scalars['Boolean']['input'];
+  network_connections?: InputMaybe<Array<NetworkConnInput>>;
+  power: PowerInput;
+  signal_protocol: Protocol;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createItem: Item;
@@ -258,19 +315,22 @@ export type MutationCreateUserArgs = {
 
 export enum NetworkCableKind {
   Cat_5e = 'CAT_5e',
-  Cat_6e = 'CAT_6e',
+  Cat_6a = 'CAT_6a',
+  Cat_7 = 'CAT_7',
   Fiber = 'FIBER'
 }
 
 export type NetworkConn = {
   __typename?: 'NetworkConn';
   max_conn_speed: NetworkSpeed;
+  poe?: Maybe<Scalars['Boolean']['output']>;
   port_id?: Maybe<Scalars['String']['output']>;
   protocol: Protocol;
 };
 
 export type NetworkConnInput = {
   max_conn_speed: NetworkSpeed;
+  poe?: InputMaybe<Scalars['Boolean']['input']>;
   port_id?: InputMaybe<Scalars['String']['input']>;
   protocol: Protocol;
 };
@@ -305,7 +365,7 @@ export enum PolarPattern {
 
 export type Power = {
   __typename?: 'Power';
-  input_connector: PowerConnector;
+  input_connector?: Maybe<PowerConnector>;
   lower_voltage?: Maybe<Scalars['Float']['output']>;
   max_wattage: Scalars['Float']['output'];
   output_connector?: Maybe<PowerConnector>;
@@ -329,13 +389,36 @@ export enum PowerConnector {
 }
 
 export type PowerInput = {
-  input_connector: PowerConnector;
+  input_connector?: InputMaybe<PowerConnector>;
   lower_voltage?: InputMaybe<Scalars['Float']['input']>;
   max_wattage: Scalars['Float']['input'];
   output_connector?: InputMaybe<PowerConnector>;
   redundant?: InputMaybe<Scalars['Boolean']['input']>;
   upper_voltage?: InputMaybe<Scalars['Float']['input']>;
   wattage: Scalars['Float']['input'];
+};
+
+export type Processor = {
+  __typename?: 'Processor';
+  analog_connections?: Maybe<Array<AnalogConn>>;
+  max_sample_rate: SampleRate;
+  midi?: Maybe<MidiType>;
+  network_connections?: Maybe<Array<NetworkConn>>;
+  power: Power;
+  signal_protocol: Protocol;
+  total_inputs: Scalars['Int']['output'];
+  total_ouputs: Scalars['Int']['output'];
+};
+
+export type ProcessorInput = {
+  analog_connections?: InputMaybe<Array<AnalogConnInput>>;
+  max_sample_rate: SampleRate;
+  midi?: InputMaybe<MidiType>;
+  network_connections?: InputMaybe<Array<NetworkConnInput>>;
+  power: PowerInput;
+  signal_protocol: Protocol;
+  total_inputs: Scalars['Int']['input'];
+  total_ouputs: Scalars['Int']['input'];
 };
 
 export enum Protocol {
@@ -373,10 +456,101 @@ export type QueryFuzzy_By_ModelArgs = {
   model_name: Scalars['String']['input'];
 };
 
+export type Rx = {
+  __typename?: 'Rx';
+  analog_connections?: Maybe<Array<AnalogConn>>;
+  computer_ports?: Maybe<Array<ComputerConn>>;
+  digital: Scalars['Boolean']['output'];
+  lower_rf_range: Scalars['Float']['output'];
+  network_connections?: Maybe<Array<NetworkConn>>;
+  num_of_rxs: Scalars['Int']['output'];
+  power: Power;
+  range: Scalars['Int']['output'];
+  signal_protocol?: Maybe<Protocol>;
+  upper_rf_range: Scalars['Float']['output'];
+};
+
+export type RxInput = {
+  analog_connections?: InputMaybe<Array<AnalogConnInput>>;
+  computer_ports?: InputMaybe<Array<ComputerConnInput>>;
+  digital: Scalars['Boolean']['input'];
+  lower_rf_range: Scalars['Float']['input'];
+  network_connections?: InputMaybe<Array<NetworkConnInput>>;
+  num_of_rxs: Scalars['Int']['input'];
+  power: PowerInput;
+  range: Scalars['Int']['input'];
+  signal_protocol?: InputMaybe<Protocol>;
+  upper_rf_range: Scalars['Float']['input'];
+};
+
 export enum SampleRate {
   Hd = 'HD',
   Sd = 'SD',
   Uhd = 'UHD'
+}
+
+export type Speaker = {
+  __typename?: 'Speaker';
+  active: Scalars['Boolean']['output'];
+  analog_connections?: Maybe<Array<AnalogConn>>;
+  drivers: Array<SpeakerDriver>;
+  high_freq_resp: Scalars['Float']['output'];
+  line_array?: Maybe<Scalars['Boolean']['output']>;
+  low_freq_resp: Scalars['Float']['output'];
+  max_spl: Scalars['Float']['output'];
+  network_connections?: Maybe<Array<NetworkConn>>;
+  power: Power;
+  processing: Scalars['Boolean']['output'];
+  subwoofer?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export enum SpeakerDriver {
+  Midrange = 'MIDRANGE',
+  Subwoofer = 'SUBWOOFER',
+  Tweeter = 'TWEETER',
+  Woofer = 'WOOFER'
+}
+
+export type SpeakerInput = {
+  active: Scalars['Boolean']['input'];
+  analog_connections?: InputMaybe<Array<AnalogConnInput>>;
+  drivers: Array<SpeakerDriver>;
+  high_freq_resp: Scalars['Float']['input'];
+  line_array?: InputMaybe<Scalars['Boolean']['input']>;
+  low_freq_resp: Scalars['Float']['input'];
+  max_spl: Scalars['Float']['input'];
+  network_connections?: InputMaybe<Array<NetworkConnInput>>;
+  power: PowerInput;
+  processing: Scalars['Boolean']['input'];
+  subwoofer?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type StageBox = {
+  __typename?: 'StageBox';
+  analog_connections?: Maybe<Array<AnalogConn>>;
+  max_sample_rate: SampleRate;
+  network_connections?: Maybe<Array<NetworkConn>>;
+  power: Power;
+  signal_protocol: Protocol;
+  total_inputs: Scalars['Int']['output'];
+  total_ouputs: Scalars['Int']['output'];
+  word_clock: Scalars['Boolean']['output'];
+};
+
+export type StageBoxInput = {
+  analog_connections?: InputMaybe<Array<AnalogConnInput>>;
+  max_sample_rate: SampleRate;
+  network_connections?: InputMaybe<Array<NetworkConnInput>>;
+  power: PowerInput;
+  signal_protocol: Protocol;
+  total_inputs: Scalars['Int']['input'];
+  total_ouputs: Scalars['Int']['input'];
+  word_clock: Scalars['Boolean']['input'];
+};
+
+export enum TxForm {
+  Bodypack = 'BODYPACK',
+  Handheld = 'HANDHELD'
 }
 
 export enum TransmitterConnector {
@@ -385,6 +559,27 @@ export enum TransmitterConnector {
   TriPin = 'TRI_PIN',
   Trrs = 'TRRS'
 }
+
+export type Tx = {
+  __typename?: 'Tx';
+  connector?: Maybe<TransmitterConnector>;
+  form: TxForm;
+  lower_rf_range: Scalars['Float']['output'];
+  mute: Scalars['Boolean']['output'];
+  power_type: Scalars['String']['output'];
+  range: Scalars['Int']['output'];
+  upper_rf_range: Scalars['Float']['output'];
+};
+
+export type TxInput = {
+  connector?: InputMaybe<TransmitterConnector>;
+  form: TxForm;
+  lower_rf_range: Scalars['Float']['input'];
+  mute: Scalars['Boolean']['input'];
+  power_type: Scalars['String']['input'];
+  range: Scalars['Int']['input'];
+  upper_rf_range: Scalars['Float']['input'];
+};
 
 export type User = {
   __typename?: 'User';

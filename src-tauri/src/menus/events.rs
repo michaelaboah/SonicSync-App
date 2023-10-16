@@ -9,7 +9,9 @@ pub fn menu_event_handler(event: tauri::WindowMenuEvent) {
         // "print_all" => print_all(), // create a new window
         "load_project" => load_project("load-project", event),
         // "palette" => unimplemented!(),
-        // "preferences" => unimplemented!(),
+        "preferences" => {
+            event.window().emit("goto-preferences", b"").unwrap();
+        }
         "Learn More" => {
             let _url = "to be implemented".to_string();
         }

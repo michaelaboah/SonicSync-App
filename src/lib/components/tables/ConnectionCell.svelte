@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Analog, ComputerConnKind, PowerConnector, NetworkCableKind } from "$lib/@types/graphql";
+  import { Analog, ComputerConnKind, PowerConnector, NetworkCableKind,  Category } from "$lib/@types/graphql";
   import type { Connection } from "$lib/@types/equipment"
 	import { gearList } from "$lib/stores/equipment";
 	import { type AutocompleteOption, type PopupSettings, Autocomplete, popup, modeCurrent } from "@skeletonlabs/skeleton";
@@ -28,21 +28,39 @@
         break;
       }
       case "Network": {
-        variants = Object.values(NetworkCableKind)
+        variants = Object.values(NetworkCableKind).map((x) => x.replaceAll("_", " ").toUpperCase())
+      break;
     }
   }  
 
   const popupTarget = (Math.random() + 1).toString(36).substring(7);
   const popupSettings: PopupSettings = {
-    event: 'focus-click',
+    event: 'focus-click', 
     target: popupTarget,
     placement: 'bottom'
   };
 
 
-  $: possibleEquips = $gearList.filter((x) => JSON.stringify(x).includes("analog_connections")).map((t) => {
-    // console.log(t)
-    return { label: t.equipment.model, value: t.equipment.model } as AutocompleteOption 
+  $: possibleEquips = $gearList.filter((x) => {
+    switch (cableKind) {
+      case "Analog": {
+        return JSON.stringify(x.equipment).includes("analog") || x.equipment.category == Category.Microphones 
+      }
+      case "Power": {
+        return JSON.stringify(x.equipment).includes("power")  
+      }
+      case "Digital": {
+        return JSON.stringify(x.equipment).includes("computer_ports")
+      }
+      case "Network": {
+        return JSON.stringify(x.equipment).includes("network")
+      }
+    }
+  }).flatMap((t) => {
+      return t.items.map((item) => {
+        let description = item.description.length === 0 ? "" : '~ ' + item.description
+        return { label: `${t.equipment.model} ${description}`, value: t.equipment.model } as AutocompleteOption 
+      })
   })
 
 
@@ -53,10 +71,8 @@
 </script>
   <td class={cellClass}>
 
-    <div class="flex flex-row h-7 space-x-1">
+    <div class="flex justify-around h-7 w-full space-x-1">
 
-      <!-- Fix theme switch bug -->
-      {#key $modeCurrent}
       <input
         class="input w-full autocomplete text-xs"
         type="search"
@@ -65,20 +81,15 @@
         placeholder={connKind === "source" ? "Find Source..." : "Find Dest..."}
         use:popup={popupSettings}
       />
-      {/key}
-      <div data-popup={popupTarget} class="card w-40 max-w-sm max-h-48 text-xs m-0 overflow-y-auto" tabindex="-1">
-          <Autocomplete bind:input={connection.name} bind:options={possibleEquips} on:selection={onConnSelection} />
+      <div data-popup={popupTarget} class="card min-w-32 max-w-72 max-w-sm max-h-48 text-xs m-0 overflow-y-auto" tabindex="-1">
+          <Autocomplete bind:input={connection.name} options={possibleEquips} on:selection={onConnSelection} />
       </div>
      
-      <!-- Fix theme switch bug -->
-      {#key $modeCurrent}
-
-        <select class="select w-full text-sm pl-1 p-0" placeholder="Select Termination" name="Choose" bind:value={connection.kind}>
+        <select class="select w-full text-sm p-0" placeholder="Select Termination" name="Choose" bind:value={connection.kind}>
           {#each variants as v }
             <option class="bg-surface-50" value={v}>{v}</option> 
           {/each} 
         </select>
-        {/key}
       <div class="flex flex-row">
       </div>
 

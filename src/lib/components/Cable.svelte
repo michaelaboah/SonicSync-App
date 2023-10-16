@@ -88,17 +88,15 @@
 
 <tr class="">
 
-  <td class="!py-0.5 !px-1 border-surface-300 dark:border-surface-500">
+  <td class="!py-0.5 !px-1 border border-surface-300 dark:border-surface-500">
     <!-- Fix theme switch bug -->
-      {#key $modeCurrent}
         <input class="checkbox" type="checkbox" bind:checked={selected}/>
-      {/key}
   </td>
 
   <td class={cellClass} >
 
     <p style="background-color: {hex}; color: {textColor}"
-      class="px-4 py-1 w-full" 
+      class="px-1 py-0.5 w-full rounded" 
       contenteditable="true"
       bind:textContent={cable.data.name}>
     </p>
@@ -115,29 +113,21 @@
 
   <td class={cellClass}>
 
-    <!-- Fix theme switch bug -->
-    {#key $modeCurrent}
       <select class="select w-full h-7 text-sm pl-1 p-0" placeholder="Select Type" bind:value={cable.data.cableKind}>
         <option value="Power">Power</option>
         <option value="Analog">Analog</option>
         <option value="Digital">Digital</option>
         <option value="Network">Network</option>
       </select>
-    {/key}
   </td>
 
   <td class={cellClass}>
-      <!-- Fix theme switch bug -->
-      {#key $modeCurrent}
         <input class="input h-7 py-0 w-full m-0" type="number" bind:value={cable.data.length}/>
-      {/key}
   </td>
 
   <td class={cellClass}> 
 
     <div class="flex flex-row h-7">
- <!-- Fix theme switch bug -->
-      {#key $modeCurrent}
      
       <input
         class="input w-full autocomplete text-xs"
@@ -148,7 +138,6 @@
         use:popup={popupSettings}
         on:focus={loadAutocomplete}
       />
-      {/key}
       <div data-popup={popupTarget}  class="card w-40 max-w-sm m-h-48 text-xs p-1 m-0 overflow-y-auto" tabindex="-1">
           {#if autocompleteComponent}
 
@@ -172,7 +161,7 @@
    <ConnectionCell bind:connection={cable.source} connKind="source" cableKind={cable.data.cableKind}/>
    <ConnectionCell bind:connection={cable.destination} connKind="destination" cableKind={cable.data.cableKind}/> 
 
-  <td class="!py-0.5 w-20">
+  <td class={cellClass}>
 
     <div class="mx-4 flex flex-row gap-2 py-0.5">
 
